@@ -1,6 +1,17 @@
+import { RootState } from "@/store/store";
+import { router } from "expo-router";
 import { Text, View } from "react-native";
+import { useSelector } from "react-redux";
 
-export default function Index() {
+enum Step {
+  "EMAIL" = 1,
+  "PASSWORD" = 2,
+}
+export default function Login() {
+  const session = useSelector((state: RootState) => state.auth.session);
+  if (session) {
+    router.replace("/(tabs)");
+  }
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Text style={{ fontFamily: "Amazon-Ember-Bold" }}>Hello</Text>

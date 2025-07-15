@@ -1,8 +1,9 @@
-import { setSession } from "@/context/authSlice";
-import store from "@/context/store";
+import Header from "@/components/Shared/header/Header";
+import { setSession } from "@/store/authSlice";
+import store from "@/store/store";
 import { supabase } from "@/supabase";
 import { useFonts } from "expo-font";
-import { router, Stack } from "expo-router";
+import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { AppState } from "react-native";
@@ -18,9 +19,9 @@ AppState.addEventListener("change", (state) => {
   }
 });
 
-export default function RootLayout() {
+function AppContent() {
   const dispatch = useDispatch();
-  // const session = useSelector((state: RootState) => state.auth.session);
+
   const [loaded, error] = useFonts({
     "Amazon-Ember-Bold": require("@/assets/fonts/Amazon-Ember-Bold.ttf"),
     "Amazon-Ember-Light": require("@/assets/fonts/Amazon-Ember-Light.ttf"),
@@ -33,15 +34,18 @@ export default function RootLayout() {
       dispatch(setSession(session));
     });
 
-    supabase.auth.onAuthStateChange((_event, session) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
       dispatch(setSession(session));
     });
-
-    router.replace("/(tabs)");
 
     if (loaded || error) {
       setTimeout(() => SplashScreen.hideAsync(), 1000);
     }
+    return () => {
+      subscription?.unsubscribe();
+    };
   }, [loaded, error, dispatch]);
 
   if (!loaded && !error) {
@@ -49,10 +53,23 @@ export default function RootLayout() {
   }
 
   return (
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="(tabs)" />
+      <Stack.Screen
+        name="index"
+        options={{
+          headerShown: true,
+          header: (props) => <Header {...props} />,
+          presentation: "fullScreenModal",
+        }}
+      />
+    </Stack>
+  );
+}
+export default function RootLayout() {
+  return (
     <Provider store={store}>
-      <Stack>
-        <Stack.Screen name="index" />
-      </Stack>
+      <AppContent />
     </Provider>
   );
 }
