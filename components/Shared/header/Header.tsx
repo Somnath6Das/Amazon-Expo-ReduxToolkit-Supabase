@@ -1,5 +1,14 @@
+import {
+  BottomTabHeaderProps,
+  BottomTabNavigationOptions,
+} from "@react-navigation/bottom-tabs";
+import {
+  NativeStackHeaderProps,
+  NativeStackNavigationOptions,
+} from "@react-navigation/native-stack";
 import { View } from "react-native";
 
+import { HeaderTabsProps } from "./HeaderTabs";
 export interface CustomHeaderProps {
   headerSearchShown?: boolean;
   headerTabsProps?: HeaderTabsProps;

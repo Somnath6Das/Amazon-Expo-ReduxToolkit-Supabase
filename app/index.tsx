@@ -1,15 +1,45 @@
-import { RootState } from "@/store/store";
+import { setSession } from "@/store/authSlice";
+import { supabase } from "@/supabase";
+import { Session } from "@supabase/supabase-js";
 import { router } from "expo-router";
-import { Text, View } from "react-native";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { AppState, Text, View } from "react-native";
+import { useDispatch } from "react-redux";
 
+AppState.addEventListener("change", (state) => {
+  if (state === "active") {
+    supabase.auth.startAutoRefresh();
+  } else {
+    supabase.auth.stopAutoRefresh();
+  }
+});
 enum Step {
   "EMAIL" = 1,
   "PASSWORD" = 2,
 }
 export default function Login() {
-  const session = useSelector((state: RootState) => state.auth.session);
-  if (session) {
+  const dispatch = useDispatch();
+  const [useSession, setUseSession] = useState<Session | null>();
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      dispatch(setSession(session));
+      setUseSession(session);
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      dispatch(setSession(session));
+      setUseSession(session);
+    });
+
+    return () => {
+      subscription?.unsubscribe();
+    };
+  }, [dispatch]);
+
+  // const session = useSelector((state: RootState) => state.auth.session);
+  if (useSession) {
     router.replace("/(tabs)");
   }
   return (
