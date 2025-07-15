@@ -38,7 +38,6 @@ export default function Login() {
     };
   }, [dispatch]);
 
-  // const session = useSelector((state: RootState) => state.auth.session);
   if (useSession) {
     router.replace("/(tabs)");
   }
