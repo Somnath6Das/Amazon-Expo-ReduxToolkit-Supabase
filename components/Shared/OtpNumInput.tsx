@@ -5,7 +5,7 @@ interface Props extends TextInputProps {
   onTextChange: (value: string) => void;
 }
 
-export default function OtpNumberInput({ onTextChange }: Props) {
+export default function OtpNumInput({ onTextChange }: Props) {
   return (
     <OtpInput
       focusColor={"#f1b023ff"}
