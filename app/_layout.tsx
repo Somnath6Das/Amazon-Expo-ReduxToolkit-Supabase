@@ -13,7 +13,6 @@ export default function RootLayout() {
     "Amazon-Ember-Bold": require("@/assets/fonts/Amazon-Ember-Bold.ttf"),
     "Amazon-Ember-Light": require("@/assets/fonts/Amazon-Ember-Light.ttf"),
     "Amazon-Ember": require("@/assets/fonts/Amazon-Ember.ttf"),
-    "Amazon-Ember-Medium": require("@/assets/fonts/Amazon-Ember-Medium.ttf"),
   });
 
   useEffect(() => {
