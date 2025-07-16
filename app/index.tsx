@@ -1,4 +1,5 @@
 import { DefaultButton } from "@/components/Shared/DefaultButton";
+import OtpNumInput from "@/components/Shared/OtpNumInput";
 import { setSession } from "@/store/authSlice";
 import { supabase } from "@/supabase";
 import { Session } from "@supabase/supabase-js";
@@ -25,15 +26,16 @@ AppState.addEventListener("change", (state) => {
 });
 enum Step {
   "EMAIL" = 1,
-  "PASSWORD" = 2,
+  "OTP" = 2,
+  "PASSWORD" = 3,
 }
 export default function Login() {
   const dispatch = useDispatch();
   const [useSession, setUseSession] = useState<Session | null>();
   const navigation = useNavigation();
-
   const [step, setStep] = useState(Step.EMAIL);
   const [email, setEmail] = useState("");
+  const [otp, setOtp] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
@@ -167,6 +169,8 @@ export default function Login() {
             autoCapitalize="none"
             autoCorrect={false}
           />
+        ) : step === Step.OTP ? (
+          <OtpNumInput onTextChange={setOtp} />
         ) : (
           <>
             <TextInput
@@ -208,8 +212,11 @@ export default function Login() {
           email.length < 5 && { opacity: 0.5 },
         ]}
         onPress={() => {
-          if (step === Step.EMAIL) setStep(Step.PASSWORD);
-          else login();
+          if (step === Step.EMAIL) {
+            setStep(Step.OTP);
+          } else if (step === Step.OTP) {
+            setStep(Step.PASSWORD);
+          } else login();
         }}
         disabled={email.length < 5}
       >
