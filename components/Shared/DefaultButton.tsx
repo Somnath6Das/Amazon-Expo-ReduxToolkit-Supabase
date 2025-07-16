@@ -20,14 +20,12 @@ export function DefaultButton({
       style={[
         {
           padding: 15,
-
           alignItems: "center",
           height: 50,
           borderRadius: 50,
           backgroundColor: variant === "primary" ? "#f8ab05ff" : "white",
           borderColor: variant === "primary" ? "#f8ab05ff" : "gray",
           justifyContent: "center",
-
           borderWidth: variant === "primary" ? 0 : 1,
           opacity: props.disabled ? 0.5 : 1,
         },

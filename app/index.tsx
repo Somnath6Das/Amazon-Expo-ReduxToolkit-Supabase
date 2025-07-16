@@ -109,7 +109,7 @@ export default function Login() {
         Sign in {step === Step.EMAIL && "or create an account"}
       </Text>
 
-      <View style={{ width: "100%", gap: 20 }}>
+      <View style={{ width: "100%", gap: 15 }}>
         {step === Step.EMAIL ? (
           <Text
             style={{
@@ -185,7 +185,7 @@ export default function Login() {
               style={{
                 flexDirection: "row",
                 alignItems: "center",
-                gap: 10,
+                gap: 2,
               }}
             >
               <Checkbox
