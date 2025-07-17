@@ -1,4 +1,5 @@
 import { DefaultButton } from "@/components/Shared/DefaultButton";
+import OtpNumInput from "@/components/Shared/OtpNumInput";
 import { supabase } from "@/supabase";
 import { Checkbox } from "expo-checkbox";
 import { router, useNavigation } from "expo-router";
@@ -7,26 +8,33 @@ import { Dimensions, Pressable, Text, TextInput, View } from "react-native";
 
 enum Step {
   "EMAIL" = 1,
-  "PASSWORD" = 2,
+  "OTP" = 2,
+  "PASSWORD" = 3,
 }
-export default function Login() {
+export default function Signup() {
   const navigation = useNavigation();
   const [step, setStep] = useState(Step.EMAIL);
   const [email, setEmail] = useState("");
+  const [otp, setOtp] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const register = () => router.replace("/signup");
-
-  function login() {
-    supabase.auth
-      .signInWithPassword({ email, password })
-      .then(({ error }) => {
-        if (error) return register();
-        else onGoBack();
-      })
-      .catch(register);
+  async function register() {
+    if (otp) {
+      await supabase.auth.verifyOtp({
+        email,
+        token: otp,
+        type: "email",
+      });
+    }
+    const { error } = await supabase.auth.updateUser({
+      password,
+    });
+    if (error) {
+      console.log(error);
+    }
   }
+
   const onGoBack = () => router.back();
   useEffect(() => {
     navigation.setOptions({
@@ -59,7 +67,7 @@ export default function Login() {
           fontFamily: "Amazon-Ember-Bold",
         }}
       >
-        Sign in {step === Step.EMAIL && "or create an account"}
+        {step === Step.EMAIL && "Create an account"}
       </Text>
 
       <View style={{ width: "100%", gap: 15 }}>
@@ -120,6 +128,21 @@ export default function Login() {
             autoCapitalize="none"
             autoCorrect={false}
           />
+        ) : step === Step.OTP ? (
+          <>
+            <OtpNumInput onTextChange={setOtp} />
+            {!otp && (
+              <Text
+                style={{
+                  alignSelf: "center",
+                  fontSize: 14,
+                  fontFamily: "Amazon-Ember-Light",
+                }}
+              >
+                Please fill the OTP
+              </Text>
+            )}
+          </>
         ) : (
           <>
             <TextInput
@@ -161,14 +184,17 @@ export default function Login() {
           email.length < 5 && { opacity: 0.5 },
         ]}
         onPress={() => {
-          if (step === Step.EMAIL) setStep(Step.PASSWORD);
-          else login();
+          if (step === Step.EMAIL) {
+            setStep(Step.OTP);
+          } else if (step === Step.OTP) {
+            setStep(Step.PASSWORD);
+          } else register();
         }}
         disabled={email.length < 5}
       >
-        {step === Step.EMAIL ? "Continue" : "Sign In"}
+        {step === Step.EMAIL || step === Step.OTP ? "Continue" : "Register"}
       </DefaultButton>
-      <Pressable onPress={register}>
+      <Pressable onPress={() => router.replace("/")}>
         <Text
           style={{
             fontSize: 18,
@@ -176,8 +202,8 @@ export default function Login() {
             fontFamily: "Amazon-Ember",
           }}
         >
-          Don&apos;t have an account?{" "}
-          <Text style={{ color: "#f1b023ff" }}>Signup</Text>
+          Already have an account?{" "}
+          <Text style={{ color: "#f1b023ff" }}>Login</Text>
         </Text>
       </Pressable>
       <View
@@ -190,7 +216,6 @@ export default function Login() {
         <Text style={{ fontFamily: "Amazon-Ember-Light" }}>
           By continuing, you agree to Amazon&apos;s{" "}
         </Text>
-
         <Text
           style={{
             textDecorationLine: "underline",

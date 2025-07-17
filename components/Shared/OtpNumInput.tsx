@@ -5,7 +5,7 @@ interface Props extends TextInputProps {
   onTextChange: (value: string) => void;
 }
 
-export default function OtpNumInput({ onTextChange }: Props) {
+export default function OtpNumInput({ onTextChange, info }: Props) {
   return (
     <View style={{ width: "100%", alignItems: "center" }}>
       <OtpInput
