@@ -3,11 +3,13 @@ import { setSession } from "@/store/authSlice";
 import store from "@/store/store";
 import { supabase } from "@/supabase";
 import { Session } from "@supabase/supabase-js";
+
 import { useFonts } from "expo-font";
 import { router, Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect, useState } from "react";
 import { AppState } from "react-native";
+
 import { Provider, useDispatch } from "react-redux";
 
 SplashScreen.preventAutoHideAsync();

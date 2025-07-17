@@ -1,15 +1,18 @@
 import { DefaultButton } from "@/components/Shared/DefaultButton";
+import { setSession } from "@/store/authSlice";
 import { supabase } from "@/supabase";
 import { Checkbox } from "expo-checkbox";
 import { router, useNavigation } from "expo-router";
 import { useEffect, useState } from "react";
 import { Dimensions, Pressable, Text, TextInput, View } from "react-native";
+import { useDispatch } from "react-redux";
 
 enum Step {
   "EMAIL" = 1,
   "PASSWORD" = 2,
 }
 export default function Login() {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const [step, setStep] = useState(Step.EMAIL);
   const [email, setEmail] = useState("");
@@ -18,14 +21,17 @@ export default function Login() {
 
   const register = () => router.replace("/signup");
 
-  function login() {
-    supabase.auth
-      .signInWithPassword({ email, password })
-      .then(({ error }) => {
-        if (error) return register();
-        else onGoBack();
-      })
-      .catch(register);
+  async function login() {
+    try {
+      const {
+        data: { session },
+        error,
+      } = await supabase.auth.signInWithPassword({ email, password });
+
+      dispatch(setSession(session));
+    } catch (error) {
+      console.log(error);
+    }
   }
   const onGoBack = () => router.back();
   useEffect(() => {

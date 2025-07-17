@@ -25,6 +25,7 @@
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
         <data android:scheme="amazon"/>
+        <data android:scheme="com.somnathdas.Amazon"/>
       </intent-filter>
     </activity>
   </application>

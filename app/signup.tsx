@@ -19,23 +19,50 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  async function register() {
-    if (otp) {
-      await supabase.auth.verifyOtp({
-        email,
-        token: otp,
-        type: "email",
-      });
-    }
-    const { error } = await supabase.auth.updateUser({
-      password,
+  async function sendOtp() {
+    const { data, error } = await supabase.auth.signInWithOtp({
+      email,
     });
+    console.log(data);
     if (error) {
-      console.log(error);
+      console.log("not a valid email");
     }
   }
 
-  const onGoBack = () => router.back();
+  async function register() {
+    try {
+      if (!otp) return;
+
+      const { data: verifyData, error: verifyError } =
+        await supabase.auth.verifyOtp({
+          email,
+          token: otp,
+          type: "email",
+        });
+
+      if (verifyError) {
+        console.error("OTP verification failed:", verifyError.message);
+        return;
+      }
+
+      const { data: updateData, error: updateError } =
+        await supabase.auth.updateUser({
+          password,
+        });
+
+      if (updateError) {
+        console.error("Password update failed:", updateError.message);
+        return;
+      }
+
+      console.log("User registered:", updateData);
+      router.replace("/");
+    } catch (e) {
+      console.error("Registration failed:", e);
+    }
+  }
+
+  const onGoBack = () => router.replace("/");
   useEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
@@ -185,10 +212,13 @@ export default function Signup() {
         ]}
         onPress={() => {
           if (step === Step.EMAIL) {
+            sendOtp();
             setStep(Step.OTP);
           } else if (step === Step.OTP) {
             setStep(Step.PASSWORD);
-          } else register();
+          } else if (step === Step.PASSWORD) {
+            register();
+          }
         }}
         disabled={email.length < 5}
       >
