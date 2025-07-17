@@ -67,7 +67,7 @@ export default function Signup() {
     navigation.setOptions({
       headerLeft: () => (
         <Pressable onPress={onGoBack}>
-          <Text style={{ fontSize: 18, fontWeight: 800 }}>Back</Text>
+          <Text style={{ fontSize: 18, fontWeight: "800" }}>Back</Text>
         </Pressable>
       ),
       headerTitle: () => (
@@ -228,7 +228,7 @@ export default function Signup() {
         <Text
           style={{
             fontSize: 18,
-            fontWeight: 800,
+            fontWeight: "800",
             fontFamily: "Amazon-Ember",
           }}
         >
