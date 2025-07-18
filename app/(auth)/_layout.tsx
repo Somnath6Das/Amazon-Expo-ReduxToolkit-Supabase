@@ -1,13 +1,11 @@
 import Header from "@/components/Shared/header/Header";
-import { RootState } from "@/store/store";
-import { Redirect, Stack } from "expo-router";
-import { useSelector } from "react-redux";
+import { Stack } from "expo-router";
 
 export default function Layout() {
-  const session = useSelector((state: RootState) => state.auth.session);
-  if (session) {
-    return <Redirect href="/(tabs)" />;
-  }
+  // const session = useSelector((state: RootState) => state.auth.session);
+  // if (session) {
+  //   return <Redirect href="/(tabs)" />;
+  // }
   return (
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen

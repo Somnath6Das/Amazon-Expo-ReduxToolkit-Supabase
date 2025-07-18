@@ -1,7 +1,10 @@
+import HomeCarousel from "@/components/Screens/home/HomeCarousel";
+import { HomeSuggestions } from "@/components/Screens/home/HomeSuggestions";
+import { DeliveryLocation } from "@/components/Shared/DeliveryLocation";
 import { setSession } from "@/store/authSlice";
 import { RootState } from "@/store/store";
 import { supabase } from "@/supabase";
-import { Pressable, Text, View } from "react-native";
+import { ScrollView } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Home() {
@@ -13,14 +16,14 @@ export default function Home() {
     await supabase.auth.signOut();
   };
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Pressable
-        onPress={() => {
-          hendleSignout();
-        }}
-      >
-        <Text>Sign out</Text>
-      </Pressable>
-    </View>
+    <ScrollView
+      contentContainerStyle={{
+        flex: 1,
+      }}
+    >
+      <DeliveryLocation />
+      <HomeCarousel />
+      <HomeSuggestions />
+    </ScrollView>
   );
 }

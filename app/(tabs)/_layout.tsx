@@ -1,19 +1,17 @@
 import Header from "@/components/Shared/header/Header";
-import { RootState } from "@/store/store";
 import MCIcon from "@expo/vector-icons/MaterialCommunityIcons";
-import { Redirect, Tabs } from "expo-router";
+import { Tabs } from "expo-router";
 import { Text, View } from "react-native";
-import { useSelector } from "react-redux";
 interface Tab {
   name: string;
   icon: "home-outline" | "account-outline" | "cart-check";
 }
 
 export default function TabLayout() {
-  const session = useSelector((state: RootState) => state.auth.session);
-  if (!session) {
-    return <Redirect href="/(auth)" />;
-  }
+  // const session = useSelector((state: RootState) => state.auth.session);
+  // if (!session) {
+  //   return <Redirect href="/(auth)" />;
+  // }
   const value = 8;
   const tabs: Tab[] = [
     {
