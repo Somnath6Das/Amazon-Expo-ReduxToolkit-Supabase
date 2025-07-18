@@ -7,7 +7,7 @@ import { Session } from "@supabase/supabase-js";
 import { useFonts } from "expo-font";
 import { router, Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { AppState } from "react-native";
 
 import { Provider, useDispatch } from "react-redux";
@@ -47,14 +47,25 @@ function Layout() {
     };
   }, [dispatch]);
 
+  const hasNavigated = useRef(false);
+
+  const navigateToTabs = useCallback(() => {
+    if (!hasNavigated.current) {
+      hasNavigated.current = true;
+      router.replace("/(tabs)");
+    }
+  }, []);
+
   useEffect(() => {
     if (loaded || error) {
       if (useSession) {
-        router.replace("/(tabs)");
+        navigateToTabs();
+      } else {
+        hasNavigated.current = false;
       }
       setTimeout(() => SplashScreen.hideAsync(), 1000);
     }
-  }, [error, loaded, useSession]);
+  }, [error, loaded, useSession, navigateToTabs]);
 
   if (!loaded && !error) {
     return null;

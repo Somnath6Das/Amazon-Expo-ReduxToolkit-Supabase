@@ -3,7 +3,7 @@ import { setSession } from "@/store/authSlice";
 import { supabase } from "@/supabase";
 import { Checkbox } from "expo-checkbox";
 import { router, useNavigation } from "expo-router";
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { Dimensions, Pressable, Text, TextInput, View } from "react-native";
 import { useDispatch } from "react-redux";
 
@@ -34,7 +34,7 @@ export default function Login() {
     }
   }
   const onGoBack = () => router.back();
-  useEffect(() => {
+  useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
         <Pressable onPress={onGoBack}>
@@ -45,7 +45,7 @@ export default function Login() {
         <Text style={{ fontSize: 18, fontWeight: "bold" }}>Amazon.in</Text>
       ),
     });
-  }, [navigation, navigation.setOptions]);
+  }, [navigation]);
 
   return (
     <View

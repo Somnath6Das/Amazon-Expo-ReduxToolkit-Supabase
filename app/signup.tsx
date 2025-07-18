@@ -3,7 +3,7 @@ import OtpNumInput from "@/components/Shared/OtpNumInput";
 import { supabase } from "@/supabase";
 import { Checkbox } from "expo-checkbox";
 import { router, useNavigation } from "expo-router";
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { Dimensions, Pressable, Text, TextInput, View } from "react-native";
 
 enum Step {
@@ -54,8 +54,6 @@ export default function Signup() {
         console.error("Password update failed:", updateError.message);
         return;
       }
-
-      console.log("User registered:", updateData);
       router.replace("/");
     } catch (e) {
       console.error("Registration failed:", e);
@@ -63,7 +61,7 @@ export default function Signup() {
   }
 
   const onGoBack = () => router.replace("/");
-  useEffect(() => {
+  useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
         <Pressable onPress={onGoBack}>
@@ -74,7 +72,7 @@ export default function Signup() {
         <Text style={{ fontSize: 18, fontWeight: "bold" }}>Amazon.in</Text>
       ),
     });
-  }, [navigation, navigation.setOptions]);
+  }, [navigation]);
 
   return (
     <View
