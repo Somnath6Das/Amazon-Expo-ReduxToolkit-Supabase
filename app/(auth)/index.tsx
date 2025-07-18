@@ -1,66 +1,39 @@
 import { DefaultButton } from "@/components/Shared/DefaultButton";
-import OtpNumInput from "@/components/Shared/OtpNumInput";
+import { setSession } from "@/store/authSlice";
 import { supabase } from "@/supabase";
 import { Checkbox } from "expo-checkbox";
 import { router, useNavigation } from "expo-router";
 import { useLayoutEffect, useState } from "react";
 import { Dimensions, Pressable, Text, TextInput, View } from "react-native";
+import { useDispatch } from "react-redux";
 
 enum Step {
   "EMAIL" = 1,
-  "OTP" = 2,
-  "PASSWORD" = 3,
+  "PASSWORD" = 2,
 }
-export default function Signup() {
+export default function Login() {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const [step, setStep] = useState(Step.EMAIL);
   const [email, setEmail] = useState("");
-  const [otp, setOtp] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  async function sendOtp() {
-    const { data, error } = await supabase.auth.signInWithOtp({
-      email,
-    });
-    console.log(data);
-    if (error) {
-      console.log("not a valid email");
-    }
-  }
+  const register = () => router.replace("/(auth)/signup");
 
-  async function register() {
+  async function login() {
     try {
-      if (!otp) return;
+      const {
+        data: { session },
+        error,
+      } = await supabase.auth.signInWithPassword({ email, password });
 
-      const { data: verifyData, error: verifyError } =
-        await supabase.auth.verifyOtp({
-          email,
-          token: otp,
-          type: "email",
-        });
-
-      if (verifyError) {
-        console.error("OTP verification failed:", verifyError.message);
-        return;
-      }
-
-      const { data: updateData, error: updateError } =
-        await supabase.auth.updateUser({
-          password,
-        });
-
-      if (updateError) {
-        console.error("Password update failed:", updateError.message);
-        return;
-      }
-      router.replace("/");
-    } catch (e) {
-      console.error("Registration failed:", e);
+      dispatch(setSession(session));
+    } catch (error) {
+      console.log(error);
     }
   }
-
-  const onGoBack = () => router.replace("/");
+  const onGoBack = () => router.back();
   useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
@@ -92,7 +65,7 @@ export default function Signup() {
           fontFamily: "Amazon-Ember-Bold",
         }}
       >
-        {step === Step.EMAIL && "Create an account"}
+        Sign in {step === Step.EMAIL && "or create an account"}
       </Text>
 
       <View style={{ width: "100%", gap: 15 }}>
@@ -153,21 +126,6 @@ export default function Signup() {
             autoCapitalize="none"
             autoCorrect={false}
           />
-        ) : step === Step.OTP ? (
-          <>
-            <OtpNumInput onTextChange={setOtp} />
-            {!otp && (
-              <Text
-                style={{
-                  alignSelf: "center",
-                  fontSize: 14,
-                  fontFamily: "Amazon-Ember-Light",
-                }}
-              >
-                Please fill the OTP
-              </Text>
-            )}
-          </>
         ) : (
           <>
             <TextInput
@@ -209,20 +167,14 @@ export default function Signup() {
           email.length < 5 && { opacity: 0.5 },
         ]}
         onPress={() => {
-          if (step === Step.EMAIL) {
-            sendOtp();
-            setStep(Step.OTP);
-          } else if (step === Step.OTP) {
-            setStep(Step.PASSWORD);
-          } else if (step === Step.PASSWORD) {
-            register();
-          }
+          if (step === Step.EMAIL) setStep(Step.PASSWORD);
+          else login();
         }}
         disabled={email.length < 5}
       >
-        {step === Step.EMAIL || step === Step.OTP ? "Continue" : "Register"}
+        {step === Step.EMAIL ? "Continue" : "Sign In"}
       </DefaultButton>
-      <Pressable onPress={() => router.replace("/")}>
+      <Pressable onPress={register}>
         <Text
           style={{
             fontSize: 18,
@@ -230,8 +182,8 @@ export default function Signup() {
             fontFamily: "Amazon-Ember",
           }}
         >
-          Already have an account?{" "}
-          <Text style={{ color: "#f1b023ff" }}>Login</Text>
+          Don&apos;t have an account?{" "}
+          <Text style={{ color: "#f1b023ff" }}>Signup</Text>
         </Text>
       </Pressable>
       <View
@@ -244,6 +196,7 @@ export default function Signup() {
         <Text style={{ fontFamily: "Amazon-Ember-Light" }}>
           By continuing, you agree to Amazon&apos;s{" "}
         </Text>
+
         <Text
           style={{
             textDecorationLine: "underline",

@@ -1,16 +1,14 @@
-import Header from "@/components/Shared/header/Header";
 import { setSession } from "@/store/authSlice";
-import store from "@/store/store";
+import store, { RootState } from "@/store/store";
 import { supabase } from "@/supabase";
-import { Session } from "@supabase/supabase-js";
 
 import { useFonts } from "expo-font";
-import { router, Stack } from "expo-router";
+import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 import { AppState } from "react-native";
 
-import { Provider, useDispatch } from "react-redux";
+import { Provider, useDispatch, useSelector } from "react-redux";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -23,7 +21,7 @@ AppState.addEventListener("change", (state) => {
 });
 function Layout() {
   const dispatch = useDispatch();
-  const [useSession, setUseSession] = useState<Session | null>();
+  const session = useSelector((state: RootState) => state.auth.session);
   const [loaded, error] = useFonts({
     "Amazon-Ember-Bold": require("@/assets/fonts/Amazon-Ember-Bold.ttf"),
     "Amazon-Ember-Light": require("@/assets/fonts/Amazon-Ember-Light.ttf"),
@@ -32,14 +30,12 @@ function Layout() {
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       dispatch(setSession(session));
-      setUseSession(session);
     });
 
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
       dispatch(setSession(session));
-      setUseSession(session);
     });
 
     return () => {
@@ -47,25 +43,11 @@ function Layout() {
     };
   }, [dispatch]);
 
-  const hasNavigated = useRef(false);
-
-  const navigateToTabs = useCallback(() => {
-    if (!hasNavigated.current) {
-      hasNavigated.current = true;
-      router.replace("/(tabs)");
-    }
-  }, []);
-
   useEffect(() => {
     if (loaded || error) {
-      if (useSession) {
-        navigateToTabs();
-      } else {
-        hasNavigated.current = false;
-      }
       setTimeout(() => SplashScreen.hideAsync(), 1000);
     }
-  }, [error, loaded, useSession, navigateToTabs]);
+  }, [error, loaded, session]);
 
   if (!loaded && !error) {
     return null;
@@ -73,23 +55,9 @@ function Layout() {
 
   return (
     <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="index" />
       <Stack.Screen name="(tabs)" />
-      <Stack.Screen
-        name="index"
-        options={{
-          headerShown: true,
-          header: (props) => <Header {...props} />,
-          presentation: "fullScreenModal",
-        }}
-      />
-      <Stack.Screen
-        name="signup"
-        options={{
-          headerShown: true,
-          header: (props) => <Header {...props} />,
-          animation: "fade",
-        }}
-      />
+      <Stack.Screen name="(auth)" />
     </Stack>
   );
 }
