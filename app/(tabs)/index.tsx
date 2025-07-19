@@ -1,17 +1,21 @@
 import HomeCarousel from "@/components/Screens/home/HomeCarousel";
 import { HomeSuggestions } from "@/components/Screens/home/HomeSuggestions";
 import { ProductDealCard } from "@/components/Screens/home/ProductDealCard";
+import { DefaultButton } from "@/components/Shared/DefaultButton";
 import { DeliveryLocation } from "@/components/Shared/DeliveryLocation";
+import { HeaderTabsProps } from "@/components/Shared/header/HeaderTabs";
 import { setSession } from "@/store/authSlice";
 import { RootState } from "@/store/store";
 import { supabase } from "@/supabase";
 import { Product } from "@/types/product";
-import { router } from "expo-router";
-import { ScrollView, Text, View } from "react-native";
+import { router, useNavigation } from "expo-router";
+import { useEffect } from "react";
+import { Alert, ScrollView, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Home() {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
   const session = useSelector((state: RootState) => state.auth.session);
 
   const hendleSignout = async () => {
@@ -44,9 +48,34 @@ export default function Home() {
       model3DUrl: null,
     },
   ];
+  const tabs: HeaderTabsProps["tabs"] = [
+    {
+      active: true,
+      title: "Alexa Lists",
+      onPress: () => Alert.alert("Alexa Lists"),
+    },
+    {
+      title: "Prime",
+      onPress: () => Alert.alert("Prime"),
+    },
+    {
+      title: "Video",
+      onPress: () => Alert.alert("Video"),
+    },
+  ];
+  useEffect(() => {
+    navigation.setOptions({
+      headerSearchShown: true,
+      headerTabsProps: { tabs },
+    });
+
+    // getDeals();
+  }, [navigation.setOptions]);
   const onProductPress = ({ id }: Product) => {
     router.push(`/product/${id}`);
   };
+  const onClickAuth = () => router.push("/(auth)");
+
   return (
     <ScrollView
       scrollEnabled
@@ -92,7 +121,7 @@ export default function Home() {
             ))}
           </View>
         ) : (
-          <View></View>
+          <DefaultButton onPress={onClickAuth}>Sign in Securely</DefaultButton>
         )}
       </View>
     </ScrollView>

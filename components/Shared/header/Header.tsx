@@ -9,7 +9,7 @@ import {
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import GradientBackground from "./GradientBackground";
-import HeaderSearch from "./HeaderSearch";
+import { HeaderSearch } from "./HeaderSearch";
 import { HeaderTabs, HeaderTabsProps } from "./HeaderTabs";
 export interface CustomHeaderProps {
   headerSearchShown?: boolean;
