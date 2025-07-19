@@ -54,6 +54,7 @@ export default function Signup() {
         console.error("Password update failed:", updateError.message);
         return;
       }
+      router.replace("/(tabs)");
     } catch (e) {
       console.error("Registration failed:", e);
     }

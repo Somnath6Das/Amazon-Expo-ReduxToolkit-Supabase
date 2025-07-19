@@ -13,9 +13,9 @@ export function ProductDealCard({ product, onPress }: Props) {
     <Pressable onPress={onPress}>
       <View
         style={{
-          width: Dimensions.get("window").width / 2 - 40,
-          height: 160,
-          gap: 10,
+          width: Dimensions.get("window").width / 2 - 30,
+          height: 180,
+          marginBottom: 5,
         }}
       >
         <View

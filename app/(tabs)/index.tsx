@@ -47,6 +47,30 @@ export default function Home() {
       imageUrl: "https://m.media-amazon.com/images/I/61QxkJGYxeL.jpg",
       model3DUrl: null,
     },
+    {
+      id: 3,
+      name: "Wireless Mouse",
+      amountInStock: 100,
+      currentPrice: 999,
+      previousPrice: 1299,
+      deliveryPrice: 40,
+      deliveryInDays: 2,
+      isAmazonChoice: true,
+      imageUrl: "https://uniquec.com/wp-content/uploads/235.jpg",
+      model3DUrl: null,
+    },
+    {
+      id: 4,
+      name: "Keyboard",
+      amountInStock: 50,
+      currentPrice: 1499,
+      previousPrice: 1799,
+      deliveryPrice: 60,
+      deliveryInDays: 3,
+      isAmazonChoice: false,
+      imageUrl: "https://m.media-amazon.com/images/I/61QxkJGYxeL.jpg",
+      model3DUrl: null,
+    },
   ];
   const tabs: HeaderTabsProps["tabs"] = [
     {
@@ -80,7 +104,7 @@ export default function Home() {
     <ScrollView
       scrollEnabled
       contentContainerStyle={{
-        flex: 1,
+        paddingBottom: 10,
       }}
     >
       <DeliveryLocation />
@@ -88,8 +112,10 @@ export default function Home() {
       <HomeSuggestions />
       <View
         style={{
+          marginTop: "40%",
           backgroundColor: "white",
           width: "100%",
+
           padding: 20,
           gap: 20,
         }}
@@ -107,9 +133,9 @@ export default function Home() {
           <View
             style={{
               justifyContent: "space-between",
-              gap: 30,
+              gap: 20,
               flexWrap: "wrap",
-              height: "21%",
+              flexDirection: "row",
             }}
           >
             {deals.map((product) => (

@@ -29,6 +29,7 @@ export default function Login() {
       } = await supabase.auth.signInWithPassword({ email, password });
 
       dispatch(setSession(session));
+      router.replace("/(tabs)");
     } catch (error) {
       console.log(error);
     }
