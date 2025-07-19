@@ -13,10 +13,17 @@ const images = [IMG_AD_1, IMG_AD_2, IMG_AD_3];
 
 export function HomeSuggestions() {
   return (
-    <View style={{ height: 200, width: Dimensions.get("window").width }}>
+    <View
+      style={{
+        height: 210,
+        width: Dimensions.get("window").width,
+        position: "absolute",
+        top: 279,
+      }}
+    >
       <ScrollView
         horizontal={true}
-        contentContainerStyle={{ marginTop: -50 }}
+        contentContainerStyle={{ marginTop: 4 }}
         showsHorizontalScrollIndicator={false}
       >
         {images.map((image, index) => (

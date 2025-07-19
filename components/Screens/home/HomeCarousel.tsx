@@ -27,6 +27,7 @@ export default function HomeCarousel() {
   }, []);
   return (
     <FlatList
+      contentContainerStyle={{ position: "relative" }}
       ref={ref}
       data={images}
       horizontal
