@@ -12,7 +12,7 @@ export default function TabLayout() {
   // if (!session) {
   //   return <Redirect href="/(auth)" />;
   // }
-  const value = 8;
+  const value: number = 10;
   const tabs: Tab[] = [
     {
       name: "index",
@@ -72,11 +72,12 @@ export default function TabLayout() {
                       paddingHorizontal: 4,
                       borderRadius: 10,
                       position: "absolute",
-                      top: 11,
-                      backgroundColor: "white",
+                      top: 8,
+                      backgroundColor:
+                        value === 0 ? "transparent" : "#de1b1bff",
                       fontWeight: "bold",
                       fontSize: 12,
-                      color: focused ? "#238db0" : "black",
+                      color: value === 0 ? "transparent" : "white",
                     }}
                   >
                     {value}
