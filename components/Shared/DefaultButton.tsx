@@ -19,13 +19,15 @@ export function DefaultButton({
       onPress={onPress}
       style={[
         {
-          padding: 15,
-          alignItems: "center",
+          paddingHorizontal: 20,
           height: 50,
+
           borderRadius: 50,
+          alignItems: "center",
+          justifyContent: "center",
+          flexDirection: "row",
           backgroundColor: variant === "primary" ? "#f8ab05ff" : "white",
           borderColor: variant === "primary" ? "#f8ab05ff" : "gray",
-          justifyContent: "center",
           borderWidth: variant === "primary" ? 0 : 1,
           opacity: props.disabled ? 0.5 : 1,
         },
@@ -35,7 +37,7 @@ export function DefaultButton({
     >
       <Text
         style={{
-          color: "white",
+          color: variant === "primary" ? "white" : "black",
           fontFamily: "Amazon-Ember",
           fontSize: 18,
         }}

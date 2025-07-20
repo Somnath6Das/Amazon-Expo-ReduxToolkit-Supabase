@@ -13,7 +13,8 @@ export default function Profile() {
   const navigation = useNavigation();
   const [sheetOpen, setSheetOpen] = useState(false);
 
-  const onClickAuth = () => router.push("/(auth)");
+  const onClickLogin = () => router.push("/(auth)");
+  const onClickSignUp = () => router.push("/(auth)/signup");
 
   const signOut = async () => {
     await supabase.auth.signOut();
@@ -36,7 +37,7 @@ export default function Profile() {
   }, [navigation.setOptions, session]);
   return (
     <ScrollView style={{ backgroundColor: "white" }}>
-      {!session ? (
+      {session ? (
         <View
           style={{
             flexDirection: "row",
@@ -103,8 +104,8 @@ export default function Profile() {
               Sign in for the optimal experience
             </Text>
             <View style={{ width: "90%", gap: 15 }}>
-              <DefaultButton onPress={onClickAuth}>Sign In</DefaultButton>
-              <DefaultButton onPress={onClickAuth} variant="secondary">
+              <DefaultButton onPress={onClickLogin}>Sign In</DefaultButton>
+              <DefaultButton onPress={onClickSignUp} variant="secondary">
                 Create Account
               </DefaultButton>
             </View>
