@@ -1,12 +1,12 @@
 import { setSession } from "@/store/authSlice";
 import store, { RootState } from "@/store/store";
 import { supabase } from "@/supabase";
-
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { AppState } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import { Provider, useDispatch, useSelector } from "react-redux";
 
@@ -63,8 +63,10 @@ function Layout() {
 }
 export default function RootLayout() {
   return (
-    <Provider store={store}>
-      <Layout />
-    </Provider>
+    <GestureHandlerRootView>
+      <Provider store={store}>
+        <Layout />
+      </Provider>
+    </GestureHandlerRootView>
   );
 }
