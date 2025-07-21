@@ -2,7 +2,6 @@ import BottomSheetComponent from "@/components/Screens/profile/BottomSheet";
 import { ProfileUnauthedBanner } from "@/components/Screens/profile/ProfileUnauthedBanner";
 import { DefaultButton } from "@/components/Shared/DefaultButton";
 import { RootState } from "@/store/store";
-import { supabase } from "@/supabase";
 import Icon from "@expo/vector-icons/Ionicons";
 import BottomSheet from "@gorhom/bottom-sheet";
 
@@ -18,9 +17,11 @@ export default function Profile() {
   const onClickLogin = () => router.push("/(auth)");
   const onClickSignUp = () => router.push("/(auth)/signup");
 
-  const signOut = async () => {
-    await supabase.auth.signOut();
-    router.replace("/(tabs)");
+  const clickToOrdered = async () => {
+    router.push("/(user_activity)/product_ordered");
+  };
+  const clickToSeller = async () => {
+    router.push("/(user_activity)/seller_page");
   };
   const openSheet = useCallback(() => {
     bottomSheetRef.current?.expand();
@@ -113,6 +114,33 @@ export default function Profile() {
               </View>
             </View>
             <ProfileUnauthedBanner />
+          </View>
+        )}
+        {session && (
+          <View
+            style={{
+              width: "100%",
+              flexDirection: "row",
+              justifyContent: "center",
+              gap: 8,
+              paddingHorizontal: 8,
+              marginTop: 16,
+            }}
+          >
+            <DefaultButton
+              style={{ width: "50%" }}
+              onPress={clickToOrdered}
+              variant="secondary"
+            >
+              Ordered
+            </DefaultButton>
+            <DefaultButton
+              style={{ width: "50%" }}
+              onPress={clickToSeller}
+              variant="secondary"
+            >
+              Seller Zone
+            </DefaultButton>
           </View>
         )}
       </ScrollView>

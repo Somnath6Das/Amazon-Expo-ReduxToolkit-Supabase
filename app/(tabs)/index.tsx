@@ -34,6 +34,7 @@ export default function Home() {
       isAmazonChoice: true,
       imageUrl: "https://uniquec.com/wp-content/uploads/235.jpg",
       model3DUrl: null,
+      user_id: 0,
     },
     {
       id: 2,
@@ -46,6 +47,7 @@ export default function Home() {
       isAmazonChoice: false,
       imageUrl: "https://m.media-amazon.com/images/I/61QxkJGYxeL.jpg",
       model3DUrl: null,
+      user_id: 0,
     },
     {
       id: 3,
@@ -58,6 +60,7 @@ export default function Home() {
       isAmazonChoice: true,
       imageUrl: "https://uniquec.com/wp-content/uploads/235.jpg",
       model3DUrl: null,
+      user_id: 0,
     },
     {
       id: 4,
@@ -70,6 +73,7 @@ export default function Home() {
       isAmazonChoice: false,
       imageUrl: "https://m.media-amazon.com/images/I/61QxkJGYxeL.jpg",
       model3DUrl: null,
+      user_id: 0,
     },
   ];
   const tabs: HeaderTabsProps["tabs"] = [

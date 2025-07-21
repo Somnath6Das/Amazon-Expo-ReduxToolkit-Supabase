@@ -65,11 +65,15 @@ export default function Signup() {
     navigation.setOptions({
       headerLeft: () => (
         <Pressable onPress={onGoBack}>
-          <Text style={{ fontSize: 18, fontWeight: "800" }}>Back</Text>
+          <Text style={{ fontSize: 18, fontFamily: "Amazon-Ember-Light" }}>
+            Back
+          </Text>
         </Pressable>
       ),
       headerTitle: () => (
-        <Text style={{ fontSize: 18, fontWeight: "bold" }}>Amazon.in</Text>
+        <Text style={{ fontSize: 18, fontFamily: "Amazon-Ember-Bold" }}>
+          Amazon.in
+        </Text>
       ),
     });
   }, [navigation]);

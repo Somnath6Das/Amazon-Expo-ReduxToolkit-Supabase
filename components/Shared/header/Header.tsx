@@ -11,10 +11,12 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import GradientBackground from "./GradientBackground";
 import { HeaderSearch } from "./HeaderSearch";
 import { HeaderTabs, HeaderTabsProps } from "./HeaderTabs";
+
 export interface CustomHeaderProps {
   headerSearchShown?: boolean;
   headerTabsProps?: HeaderTabsProps;
 }
+
 export interface StackHeaderProps extends NativeStackHeaderProps {
   options: NativeStackNavigationOptions & CustomHeaderProps;
 }
@@ -27,34 +29,41 @@ export default function Header({
   options,
 }: StackHeaderProps | TabsHeaderProps) {
   const edgeInsets = useSafeAreaInsets();
-  if (options.headerLeft || options.headerTitle || options.headerRight) {
+
+  const hasCustomHeader =
+    options.headerLeft || options.headerTitle || options.headerRight;
+
+  if (hasCustomHeader) {
     return (
       <View style={{ backgroundColor: "transparent" }}>
         <View
           style={{
+            flexDirection: "row",
+            alignItems: "center",
             justifyContent: "space-between",
             paddingVertical: 10,
             paddingHorizontal: 20,
-            gap: 20,
             marginTop: edgeInsets.top,
           }}
         >
           <View style={{ flex: 1 }}>
-            {options.headerLeft && <options.headerLeft />}
-          </View>
-          <View style={{ flex: 1 }}>
             {/* @ts-ignore */}
-            {options.headerTitle && <options.headerTitle />}
+            {options.headerLeft && options.headerLeft()}
           </View>
-          <View style={{ flex: 1 }}>
+          <View style={{ flex: 1, alignItems: "center" }}>
             {/* @ts-ignore */}
-            {options.headerRight && <options.headerRight />}
+            {options.headerTitle && options.headerTitle()}
+          </View>
+          <View style={{ flex: 1, alignItems: "flex-end" }}>
+            {/* @ts-ignore */}
+            {options.headerRight && options.headerRight()}
           </View>
         </View>
         <GradientBackground />
       </View>
     );
   }
+
   return (
     <View style={{ backgroundColor: "transparent" }}>
       <View
