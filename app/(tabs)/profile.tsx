@@ -2,11 +2,12 @@ import BottomSheetComponent from "@/components/Screens/profile/BottomSheet";
 import { ProfileUnauthedBanner } from "@/components/Screens/profile/ProfileUnauthedBanner";
 import { DefaultButton } from "@/components/Shared/DefaultButton";
 import { RootState } from "@/store/store";
+import { supabase } from "@/supabase";
 import Icon from "@expo/vector-icons/Ionicons";
 import BottomSheet from "@gorhom/bottom-sheet";
 
 import { router, useFocusEffect, useNavigation } from "expo-router";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Image, Pressable, ScrollView, Text, View } from "react-native";
 import { useSelector } from "react-redux";
 
@@ -14,6 +15,7 @@ export default function Profile() {
   const session = useSelector((state: RootState) => state.auth.session);
   const navigation = useNavigation();
   const bottomSheetRef = useRef<BottomSheet>(null);
+  const [isSeller, setIsSeller] = useState<any>("");
   const onClickLogin = () => router.push("/(auth)");
   const onClickSignUp = () => router.push("/(auth)/signup");
 
@@ -48,6 +50,21 @@ export default function Profile() {
       };
     }, [])
   );
+
+  const sellerPage = async () => {
+    let { data, error } = await supabase
+      .from("profiles")
+      .select("is_seller")
+      .eq("id", session?.user?.id);
+    if (data && data.length > 0) setIsSeller(data[0].is_seller);
+
+    if (error) {
+      console.log("Something went wrong");
+    }
+  };
+  useEffect(() => {
+    sellerPage();
+  }, []);
   return (
     <>
       <ScrollView style={{ backgroundColor: "white" }}>
@@ -121,9 +138,9 @@ export default function Profile() {
             style={{
               width: "100%",
               flexDirection: "row",
-              justifyContent: "center",
+              justifyContent: "flex-start",
               gap: 8,
-              paddingHorizontal: 8,
+              paddingHorizontal: 12,
               marginTop: 16,
             }}
           >
@@ -134,13 +151,15 @@ export default function Profile() {
             >
               Ordered
             </DefaultButton>
-            <DefaultButton
-              style={{ width: "50%" }}
-              onPress={clickToSeller}
-              variant="secondary"
-            >
-              Seller Zone
-            </DefaultButton>
+            {isSeller && (
+              <DefaultButton
+                style={{ width: "50%" }}
+                onPress={clickToSeller}
+                variant="secondary"
+              >
+                Seller Zone
+              </DefaultButton>
+            )}
           </View>
         )}
       </ScrollView>
