@@ -1,13 +1,10 @@
-import { DefaultButton } from "@/components/Shared/DefaultButton";
 import { router, useNavigation } from "expo-router";
 import { useLayoutEffect } from "react";
-import { Pressable, Text, View } from "react-native";
+import { Pressable, Text } from "react-native";
 
-export default function SellerPage() {
+export default function CreateProduct() {
   const navigation = useNavigation();
   const onGoBack = () => router.back();
-  const goCreateProductPage = () =>
-    router.push("/(user_activity)/create_product");
   useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
@@ -24,18 +21,5 @@ export default function SellerPage() {
       ),
     });
   }, [navigation]);
-  return (
-    <View
-      style={{
-        flex: 1,
-        marginVertical: 50,
-        marginHorizontal: 6,
-        justifyContent: "flex-end",
-      }}
-    >
-      <DefaultButton style={{ width: "100%" }} onPress={goCreateProductPage}>
-        Create Product
-      </DefaultButton>
-    </View>
-  );
+  return <Text>Create Product</Text>;
 }
