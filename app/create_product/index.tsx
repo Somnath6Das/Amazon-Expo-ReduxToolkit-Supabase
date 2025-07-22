@@ -1,7 +1,10 @@
 import { DefaultButton } from "@/components/Shared/DefaultButton";
+import { supabase } from "@/supabase";
+import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import Feather from "@expo/vector-icons/Feather";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import Checkbox from "expo-checkbox";
+import * as DocumentPicker from "expo-document-picker";
 import * as ImagePicker from "expo-image-picker";
 import { router, useNavigation } from "expo-router";
 import { useLayoutEffect, useState } from "react";
@@ -19,8 +22,11 @@ export default function CreateProduct() {
   const onGoBack = () => router.back();
   const [name, setName] = useState("");
   const [isAmazonChoice, setIsAmazonChoice] = useState(false);
-  const [image, setImage] = useState<string | null>("");
-  const [fileUrl, setFileUrl] = useState<string | null>(null);
+  const [imageUri, setImageUri] = useState<string | null>(null);
+  const [imageName, setImageName] = useState<string | null>(null);
+  const [fileUrlGLB, setFileUrlGLB] = useState<string | null>(null);
+  const [fileNameGLB, setfileNameGLB] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
   useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
@@ -45,22 +51,73 @@ export default function CreateProduct() {
       quality: 0.5,
     });
     if (!result.canceled) {
-      setImage(result.assets[0].uri);
+      setImageUri(result.assets[0].uri);
+      setImageName(result.assets[0].fileName ?? "product.jpg");
     }
   };
-  const pickDocument = () => {};
-  const createProduct = () => {};
+  const pickAndUploadGLB = async () => {
+    const result = await DocumentPicker.getDocumentAsync({
+      type: "application/octet-stream", // fallback for .glb
+      copyToCacheDirectory: true,
+    });
+
+    if (result.canceled) return;
+    setFileUrlGLB(result.assets[0].uri);
+    setfileNameGLB(result.assets[0].name);
+
+    // submit
+    const file = result.assets[0];
+    const fileUri = file.uri;
+    const fileName = file.name;
+    // const fileType = file.mimeType || "model/gltf-binary";
+  };
+  const createProduct = async () => {
+    setLoading(true);
+    let imageFileName = "";
+    if (imageUri) {
+      const blob = await fetch(imageUri).then((res) => res.blob());
+      const fileName = `${Date.now()}_${imageName}`;
+      imageFileName = fileName;
+      const { data, error } = await supabase.storage
+        .from("user-data")
+        .upload(`user-uploads/${fileName}`, blob, {
+          contentType: "image/jpeg",
+          upsert: true,
+        });
+    }
+    const { data: imagePublicUri } = supabase.storage
+      .from("user-data")
+      .getPublicUrl(`user-uploads/${imageFileName}`);
+
+    if (fileUrlGLB) {
+      const fileBlob = await fetch(fileUrlGLB).then((res) => res.blob());
+      const { data, error } = await supabase.storage
+        .from("user-data")
+        .upload(`user-uploads/${fileNameGLB}`, fileBlob, {
+          contentType: "model/gltf-binary",
+          upsert: true,
+        });
+    }
+    const publicUrlGLB = supabase.storage
+      .from("user-data")
+      .getPublicUrl(`user-uploads/${fileNameGLB}`).data.publicUrl;
+
+    console.log(imagePublicUri);
+    console.log(publicUrlGLB);
+    // save to supabase table
+    setLoading(false);
+    //  if (error) console.error("Upload error:", error);
+    //  else console.log("Uploaded:", data);
+  };
   return (
     <ScrollView
       contentContainerStyle={{
-        flex: 1,
-        alignItems: "center",
         padding: 20,
         gap: 20,
         backgroundColor: "white",
       }}
     >
-      <View style={{ width: "100%", gap: 15 }}>
+      <View style={{ width: "100%", gap: 15, paddingBottom: 20 }}>
         <Text
           style={{
             alignSelf: "flex-start",
@@ -204,10 +261,10 @@ export default function CreateProduct() {
             Amazon Choice
           </Text>
         </View>
-        {image && (
+        {imageUri && (
           <View>
             <Image
-              source={{ uri: image }}
+              source={{ uri: imageUri }}
               style={{
                 width: 150,
                 aspectRatio: 5 / 3,
@@ -217,7 +274,7 @@ export default function CreateProduct() {
               }}
             />
             <Pressable
-              onPress={() => setImage("")}
+              onPress={() => setImageUri("")}
               style={{ position: "absolute", top: 3, left: 122 }}
             >
               <MaterialCommunityIcons
@@ -240,7 +297,7 @@ export default function CreateProduct() {
           >
             Add Product Image
           </Text>
-          {!image && (
+          {!imageUri && (
             <View
               style={{
                 borderWidth: 1,
@@ -265,44 +322,60 @@ export default function CreateProduct() {
             </View>
           )}
         </TouchableOpacity>
-        <TouchableOpacity onPress={pickDocument}>
-          <Text
-            style={{
-              alignSelf: "flex-start",
-              fontSize: 16,
-              fontWeight: "bold",
-              fontFamily: "Amazon-Ember",
-              marginBottom: 12,
-            }}
-          >
-            Uplaod .glb
-          </Text>
-          <View
-            style={{
-              borderWidth: 1,
-              borderRadius: 4,
-              borderColor: "black",
-              padding: 10,
-              flexDirection: "row",
-              justifyContent: "space-between",
-            }}
-          >
-            <Text
+
+        <Text
+          style={{
+            alignSelf: "flex-start",
+            fontSize: 16,
+            fontWeight: "bold",
+            fontFamily: "Amazon-Ember",
+          }}
+        >
+          Uplaod .glb
+        </Text>
+        {fileUrlGLB ? (
+          <Pressable onPress={() => setFileUrlGLB(null)}>
+            <MaterialCommunityIcons
+              name="close-circle"
+              size={25}
+              color="black"
+              style={{ position: "absolute", left: 36, top: -10 }}
+            />
+            <MaterialIcons name="file-present" size={50} color="black" />
+          </Pressable>
+        ) : (
+          <TouchableOpacity onPress={pickAndUploadGLB}>
+            <View
               style={{
-                fontSize: 16,
-                fontWeight: "bold",
-                fontFamily: "Amazon-Ember",
-                color: "#b6b6b6ff",
+                borderWidth: 1,
+                borderRadius: 4,
+                borderColor: "black",
+                padding: 10,
+                flexDirection: "row",
+                justifyContent: "space-between",
               }}
             >
-              {fileUrl ? "File added" : "Upload .glb"}
-            </Text>
-            <Feather name="folder-plus" size={20} color="black" />
-          </View>
-        </TouchableOpacity>
+              <Text
+                style={{
+                  fontSize: 16,
 
-        <DefaultButton style={{ width: "100%" }} onPress={createProduct}>
-          Create Product
+                  fontFamily: "Amazon-Ember",
+                  color: "#b6b6b6ff",
+                }}
+              >
+                Upload .glb
+              </Text>
+              <AntDesign name="addfile" size={18} color="black" />
+            </View>
+          </TouchableOpacity>
+        )}
+
+        <DefaultButton
+          style={{ width: "100%" }}
+          onPress={createProduct}
+          disabled={loading}
+        >
+          {loading ? "Please Wait..." : "Create Product"}
         </DefaultButton>
       </View>
     </ScrollView>
