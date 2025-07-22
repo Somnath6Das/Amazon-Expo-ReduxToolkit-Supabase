@@ -12,7 +12,7 @@ export default function TabLayout() {
   // if (!session) {
   //   return <Redirect href="/(auth)" />;
   // }
-  const value: number = 10;
+  const value: number = 8;
   const tabs: Tab[] = [
     {
       name: "seller_page",
@@ -60,9 +60,9 @@ export default function TabLayout() {
                 <Entypo
                   name={tab.icon}
                   size={30}
-                  color={focused ? "#238db0" : "#feb43dff"}
+                  color={focused ? "#238db0" : "#959493ff"}
                 />
-                {tab.name === "cart" && (
+                {tab.name === "product_ordered" && (
                   <Text
                     style={{
                       paddingHorizontal: 4,

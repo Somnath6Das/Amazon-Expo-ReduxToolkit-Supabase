@@ -12,7 +12,7 @@ export default function TabLayout() {
   // if (!session) {
   //   return <Redirect href="/(auth)" />;
   // }
-  const value: number = 10;
+  const value: number = 8;
   const tabs: Tab[] = [
     {
       name: "index",
