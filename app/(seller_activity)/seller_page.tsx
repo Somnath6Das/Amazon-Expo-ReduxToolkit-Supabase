@@ -6,8 +6,7 @@ import { Pressable, Text, View } from "react-native";
 export default function SellerPage() {
   const navigation = useNavigation();
   const onGoBack = () => router.back();
-  const goCreateProductPage = () =>
-    router.push("/(user_activity)/create_product");
+  const goCreateProductPage = () => router.push("/create_product");
   useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
@@ -28,9 +27,9 @@ export default function SellerPage() {
     <View
       style={{
         flex: 1,
-        marginVertical: 50,
-        marginHorizontal: 6,
-        justifyContent: "flex-end",
+        marginTop: "5%",
+        paddingHorizontal: 10,
+        justifyContent: "flex-start",
       }}
     >
       <DefaultButton style={{ width: "100%" }} onPress={goCreateProductPage}>

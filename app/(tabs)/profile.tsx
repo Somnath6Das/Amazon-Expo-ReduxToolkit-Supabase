@@ -20,10 +20,10 @@ export default function Profile() {
   const onClickSignUp = () => router.push("/(auth)/signup");
 
   const clickToOrdered = async () => {
-    router.push("/(user_activity)/product_ordered");
+    router.push("/buyer_ordered");
   };
   const clickToSeller = async () => {
-    router.push("/(user_activity)/seller_page");
+    router.push("/(seller_activity)/seller_page");
   };
   const openSheet = useCallback(() => {
     bottomSheetRef.current?.expand();
