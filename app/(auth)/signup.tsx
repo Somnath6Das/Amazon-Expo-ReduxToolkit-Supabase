@@ -199,7 +199,15 @@ export default function Signup() {
                 style={{ margin: 8 }}
                 color={showPassword ? "#f1b023ff" : undefined}
               />
-              <Text>Show Password</Text>
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontWeight: "bold",
+                  fontFamily: "Amazon-Ember",
+                }}
+              >
+                Show Password
+              </Text>
             </View>
           </>
         )}
@@ -234,7 +242,7 @@ export default function Signup() {
             fontFamily: "Amazon-Ember",
           }}
         >
-          Already have an account?{" "}
+          Already have an account?
           <Text style={{ color: "#f1b023ff" }}>Login</Text>
         </Text>
       </Pressable>
