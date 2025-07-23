@@ -25,7 +25,7 @@ export default function CreateProduct() {
   const [imageUri, setImageUri] = useState<string | null>(null);
   const [imageName, setImageName] = useState<string | null>(null);
   const [fileUrlGLB, setFileUrlGLB] = useState<string | null>(null);
-  const [fileNameGLB, setfileNameGLB] = useState<string | null>(null);
+  const [fileNameGLB, setFileNameGLB] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -44,6 +44,10 @@ export default function CreateProduct() {
     });
   }, [navigation]);
   const pickMedia = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== "granted") {
+      alert("Permission to access media library is required!");
+    }
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ["images"],
       allowsEditing: true,
@@ -57,57 +61,66 @@ export default function CreateProduct() {
   };
   const pickAndUploadGLB = async () => {
     const result = await DocumentPicker.getDocumentAsync({
-      type: "application/octet-stream", // fallback for .glb
+      type: "*/*",
       copyToCacheDirectory: true,
     });
 
-    if (result.canceled) return;
-    setFileUrlGLB(result.assets[0].uri);
-    setfileNameGLB(result.assets[0].name);
+    if (!result.canceled) {
+      setFileUrlGLB(result.assets[0].uri);
+      setFileNameGLB(result.assets[0].name);
+    }
 
     // submit
-    const file = result.assets[0];
-    const fileUri = file.uri;
-    const fileName = file.name;
+    // const file = result.assets[0];
+    // const fileUri = file.uri;
+    // const fileName = file.name;
     // const fileType = file.mimeType || "model/gltf-binary";
   };
   const createProduct = async () => {
     setLoading(true);
-    let imageFileName = "";
-    if (imageUri) {
+    let imagePublicUrl = null;
+    let glbPublicUrl = null;
+    if (imageUri && imageName) {
       const blob = await fetch(imageUri).then((res) => res.blob());
       const fileName = `${Date.now()}_${imageName}`;
-      imageFileName = fileName;
-      const { data, error } = await supabase.storage
+
+      const { error: imageError } = await supabase.storage
         .from("user-data")
         .upload(`user-uploads/${fileName}`, blob, {
           contentType: "image/jpeg",
           upsert: true,
         });
+      if (!imageError) {
+        imagePublicUrl = supabase.storage
+          .from("user-data")
+          .getPublicUrl(`user-uploads/${fileName}`).data.publicUrl;
+        console.log(imagePublicUrl);
+      } else {
+        console.error("Image upload failed:", imageError);
+      }
     }
-    const { data: imagePublicUri } = supabase.storage
-      .from("user-data")
-      .getPublicUrl(`user-uploads/${imageFileName}`);
 
-    if (fileUrlGLB) {
-      const fileBlob = await fetch(fileUrlGLB).then((res) => res.blob());
-      const { data, error } = await supabase.storage
-        .from("user-data")
-        .upload(`user-uploads/${fileNameGLB}`, fileBlob, {
-          contentType: "model/gltf-binary",
-          upsert: true,
-        });
-    }
-    const publicUrlGLB = supabase.storage
-      .from("user-data")
-      .getPublicUrl(`user-uploads/${fileNameGLB}`).data.publicUrl;
+    // if (fileUrlGLB && fileNameGLB) {
+    //   const fileBlob = await fetch(fileUrlGLB).then((res) => res.blob());
+    //   const { error: glbError } = await supabase.storage
+    //     .from("user-data")
+    //     .upload(`user-uploads/${fileNameGLB}`, fileBlob, {
+    //       contentType: "model/gltf-binary",
+    //       upsert: true,
+    //     });
+    //   if (!glbError) {
+    //     glbPublicUrl = supabase.storage
+    //       .from("user-data")
+    //       .getPublicUrl(`user-uploads/${fileNameGLB}`).data.publicUrl;
+    //     console.log(glbPublicUrl);
+    //   } else {
+    //     console.error("GLB upload failed:", glbError);
+    //   }
+    // }
 
-    console.log(imagePublicUri);
-    console.log(publicUrlGLB);
     // save to supabase table
     setLoading(false);
-    //  if (error) console.error("Upload error:", error);
-    //  else console.log("Uploaded:", data);
+    router.back();
   };
   return (
     <ScrollView
@@ -280,7 +293,7 @@ export default function CreateProduct() {
               <MaterialCommunityIcons
                 name="close-circle"
                 size={24}
-                color="white"
+                color="#5a5a5aff"
               />
             </Pressable>
           </View>
@@ -334,15 +347,17 @@ export default function CreateProduct() {
           Uplaod .glb
         </Text>
         {fileUrlGLB ? (
-          <Pressable onPress={() => setFileUrlGLB(null)}>
-            <MaterialCommunityIcons
-              name="close-circle"
-              size={25}
-              color="black"
-              style={{ position: "absolute", left: 36, top: -10 }}
-            />
-            <MaterialIcons name="file-present" size={50} color="black" />
-          </Pressable>
+          <View>
+            <Pressable onPress={() => setFileUrlGLB(null)}>
+              <MaterialCommunityIcons
+                name="close-circle"
+                size={25}
+                color="#5a5a5aff"
+                style={{ position: "absolute", left: 36, top: -10 }}
+              />
+            </Pressable>
+            <MaterialIcons name="upload-file" size={50} color="#393939ff" />
+          </View>
         ) : (
           <TouchableOpacity onPress={pickAndUploadGLB}>
             <View
