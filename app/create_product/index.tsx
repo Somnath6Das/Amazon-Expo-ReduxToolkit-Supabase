@@ -1,5 +1,8 @@
 import { DefaultButton } from "@/components/Shared/DefaultButton";
+import { RootState } from "@/store/store";
+import { supabase } from "@/supabase";
 import { glbUpload } from "@/utils/glbUpload";
+import { imageUpload } from "@/utils/imageUpload";
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import Feather from "@expo/vector-icons/Feather";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
@@ -17,10 +20,19 @@ import {
   View,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import { useSelector } from "react-redux";
+
 export default function CreateProduct() {
+  const session = useSelector((state: RootState) => state.auth.session);
   const navigation = useNavigation();
   const onGoBack = () => router.back();
-  const [name, setName] = useState("");
+  const [name, setName] = useState<string>("");
+  const [amountInStock, setAmountInStock] = useState<string>("1");
+  const [currentPrice, setCurrentPrice] = useState<string>("");
+  const [previousPrice, setPreviousPrice] = useState<string>("");
+  const [deliveryPrice, setDeliveryPrice] = useState<string>("");
+  const [deliveryInDays, setDeliveryInDays] = useState<string>("");
+
   const [isAmazonChoice, setIsAmazonChoice] = useState(false);
   const [imageUri, setImageUri] = useState<string | null>(null);
 
@@ -69,13 +81,34 @@ export default function CreateProduct() {
   };
   const createProduct = async () => {
     setLoading(true);
-    // const publicImageUrl = await imageUpload(imageUri);
+    const publicImageUrl = await imageUpload(imageUri);
     // console.log("Image uploaded to:", publicImageUrl);
 
     const glbUrl = await glbUpload(fileUrlGLB);
-    console.log("GLB uploaded to:", glbUrl);
-
+    // console.log("GLB uploaded to:", glbUrl);
+    const { data, error } = await supabase
+      .from("products")
+      .insert([
+        {
+          name: name,
+          amountInStock,
+          currentPrice,
+          previousPrice,
+          deliveryPrice,
+          deliveryInDays,
+          isAmazonChoice,
+          imageUrl: publicImageUrl,
+          model3DUrl: glbUrl,
+          user_id: session?.user?.id,
+        },
+      ])
+      .select();
     // save to supabase table
+
+    if (error) {
+      console.log(error);
+      return;
+    }
     setLoading(false);
     router.back();
   };
@@ -123,8 +156,9 @@ export default function CreateProduct() {
           Amount in stock
         </Text>
         <TextInput
-          value={name}
-          onChangeText={setName}
+          value={amountInStock}
+          onChangeText={setAmountInStock}
+          keyboardType="numeric"
           style={{
             borderWidth: 1,
             borderRadius: 4,
@@ -147,8 +181,9 @@ export default function CreateProduct() {
           Current Price
         </Text>
         <TextInput
-          value={name}
-          onChangeText={setName}
+          value={currentPrice}
+          onChangeText={setCurrentPrice}
+          keyboardType="numeric"
           style={{
             borderWidth: 1,
             borderRadius: 4,
@@ -171,8 +206,9 @@ export default function CreateProduct() {
           Previous Price
         </Text>
         <TextInput
-          value={name}
-          onChangeText={setName}
+          value={previousPrice}
+          onChangeText={setPreviousPrice}
+          keyboardType="numeric"
           style={{
             borderWidth: 1,
             borderRadius: 4,
@@ -195,8 +231,9 @@ export default function CreateProduct() {
           Delivery Price
         </Text>
         <TextInput
-          value={name}
-          onChangeText={setName}
+          value={deliveryPrice}
+          onChangeText={setDeliveryPrice}
+          keyboardType="numeric"
           style={{
             borderWidth: 1,
             borderRadius: 4,
@@ -205,6 +242,31 @@ export default function CreateProduct() {
             fontFamily: "Amazon-Ember",
           }}
           placeholder="Delivery Price"
+          autoCapitalize="none"
+          autoCorrect={false}
+        />
+        <Text
+          style={{
+            alignSelf: "flex-start",
+            fontSize: 16,
+            fontWeight: "bold",
+            fontFamily: "Amazon-Ember",
+          }}
+        >
+          Delivery In Days
+        </Text>
+        <TextInput
+          value={deliveryInDays}
+          onChangeText={setDeliveryInDays}
+          keyboardType="numeric"
+          style={{
+            borderWidth: 1,
+            borderRadius: 4,
+            borderColor: "black",
+            padding: 10,
+            fontFamily: "Amazon-Ember",
+          }}
+          placeholder="Delivery In Days"
           autoCapitalize="none"
           autoCorrect={false}
         />
@@ -292,7 +354,6 @@ export default function CreateProduct() {
             </View>
           )}
         </TouchableOpacity>
-
         <Text
           style={{
             alignSelf: "flex-start",
@@ -341,7 +402,6 @@ export default function CreateProduct() {
             </View>
           </TouchableOpacity>
         )}
-
         <DefaultButton
           style={{ width: "100%" }}
           onPress={createProduct}
