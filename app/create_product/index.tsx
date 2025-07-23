@@ -51,7 +51,7 @@ export default function CreateProduct() {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ["images"],
       allowsEditing: true,
-      aspect: [5, 3],
+      aspect: [1, 1],
       quality: 0.5,
     });
     if (!result.canceled) {
@@ -69,7 +69,7 @@ export default function CreateProduct() {
       setFileUrlGLB(result.assets[0].uri);
       setFileNameGLB(result.assets[0].name);
     }
-
+    console.log("0");
     // submit
     // const file = result.assets[0];
     // const fileUri = file.uri;
@@ -77,29 +77,38 @@ export default function CreateProduct() {
     // const fileType = file.mimeType || "model/gltf-binary";
   };
   const createProduct = async () => {
-    setLoading(true);
-    let imagePublicUrl = null;
-    let glbPublicUrl = null;
-    if (imageUri && imageName) {
-      const blob = await fetch(imageUri).then((res) => res.blob());
-      const fileName = `${Date.now()}_${imageName}`;
+    const fileUri = imageUri;
+    const fileName = `${Date.now()}.jpg`;
 
-      const { error: imageError } = await supabase.storage
-        .from("user-data")
-        .upload(`user-uploads/${fileName}`, blob, {
-          contentType: "image/jpeg",
-          upsert: true,
-        });
-      if (!imageError) {
-        imagePublicUrl = supabase.storage
-          .from("user-data")
-          .getPublicUrl(`user-uploads/${fileName}`).data.publicUrl;
-        console.log(imagePublicUrl);
-      } else {
-        console.error("Image upload failed:", imageError);
+    const formData = new FormData();
+    formData.append("file", {
+      uri: fileUri,
+      name: fileName,
+      type: "image/jpeg",
+    } as any);
+
+    const response = await fetch(
+      `${process.env.EXPO_PUBLIC_SUPABASE_URL}/storage/v1/object/user-data/user-uploads/${fileName}`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY}`,
+          "Content-Type": "multipart/form-data",
+        },
+        body: formData,
       }
-    }
+    );
 
+    const { data: publicData } = supabase.storage
+      .from("user-data")
+      .getPublicUrl(`user-uploads/${fileName}`);
+
+    console.log("Uploaded!", publicData.publicUrl);
+    if (!response.ok) {
+      const text = await response.text();
+      console.error("Upload error response:", text);
+      throw new Error("Upload failed");
+    }
     // if (fileUrlGLB && fileNameGLB) {
     //   const fileBlob = await fetch(fileUrlGLB).then((res) => res.blob());
     //   const { error: glbError } = await supabase.storage

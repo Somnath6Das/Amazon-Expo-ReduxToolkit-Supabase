@@ -1,0 +1,22 @@
+
+
+# upload image to supabase
+i. desable public bucket
+
+# add RLS policy
+1. Go to Supabase dashboard
+Navigate to your project → Storage → Buckets → user-data.
+
+2. Click on the "user-data" bucket
+In the bucket settings, make sure "Public" is turned off (for secure apps), and "RLS" is enabled.
+
+3. Click on the "Policies" tab
+4. Policy Name: Allow anon upload
+
+5. Operation: INSERT
+6. Target Role to Select: anon
+
+7. sql field: 
+auth.role() = 'anon'
+
+
