@@ -1,5 +1,5 @@
 import { DefaultButton } from "@/components/Shared/DefaultButton";
-import { supabase } from "@/supabase";
+import { imageUpload } from "@/utils/imageUpload";
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import Feather from "@expo/vector-icons/Feather";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
@@ -23,7 +23,7 @@ export default function CreateProduct() {
   const [name, setName] = useState("");
   const [isAmazonChoice, setIsAmazonChoice] = useState(false);
   const [imageUri, setImageUri] = useState<string | null>(null);
-  const [imageName, setImageName] = useState<string | null>(null);
+
   const [fileUrlGLB, setFileUrlGLB] = useState<string | null>(null);
   const [fileNameGLB, setFileNameGLB] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -56,7 +56,6 @@ export default function CreateProduct() {
     });
     if (!result.canceled) {
       setImageUri(result.assets[0].uri);
-      setImageName(result.assets[0].fileName ?? "product.jpg");
     }
   };
   const pickAndUploadGLB = async () => {
@@ -70,45 +69,11 @@ export default function CreateProduct() {
       setFileNameGLB(result.assets[0].name);
     }
     console.log("0");
-    // submit
-    // const file = result.assets[0];
-    // const fileUri = file.uri;
-    // const fileName = file.name;
-    // const fileType = file.mimeType || "model/gltf-binary";
   };
   const createProduct = async () => {
-    const fileUri = imageUri;
-    const fileName = `${Date.now()}.jpg`;
+    const publicImageUrl = await imageUpload(imageUri);
+    console.log("Image uploaded to:", publicImageUrl);
 
-    const formData = new FormData();
-    formData.append("file", {
-      uri: fileUri,
-      name: fileName,
-      type: "image/jpeg",
-    } as any);
-
-    const response = await fetch(
-      `${process.env.EXPO_PUBLIC_SUPABASE_URL}/storage/v1/object/user-data/user-uploads/${fileName}`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY}`,
-          "Content-Type": "multipart/form-data",
-        },
-        body: formData,
-      }
-    );
-
-    const { data: publicData } = supabase.storage
-      .from("user-data")
-      .getPublicUrl(`user-uploads/${fileName}`);
-
-    console.log("Uploaded!", publicData.publicUrl);
-    if (!response.ok) {
-      const text = await response.text();
-      console.error("Upload error response:", text);
-      throw new Error("Upload failed");
-    }
     // if (fileUrlGLB && fileNameGLB) {
     //   const fileBlob = await fetch(fileUrlGLB).then((res) => res.blob());
     //   const { error: glbError } = await supabase.storage
