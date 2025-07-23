@@ -1,5 +1,5 @@
 import { DefaultButton } from "@/components/Shared/DefaultButton";
-import { imageUpload } from "@/utils/imageUpload";
+import { glbUpload } from "@/utils/glbUpload";
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import Feather from "@expo/vector-icons/Feather";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
@@ -25,7 +25,6 @@ export default function CreateProduct() {
   const [imageUri, setImageUri] = useState<string | null>(null);
 
   const [fileUrlGLB, setFileUrlGLB] = useState<string | null>(null);
-  const [fileNameGLB, setFileNameGLB] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -66,31 +65,14 @@ export default function CreateProduct() {
 
     if (!result.canceled) {
       setFileUrlGLB(result.assets[0].uri);
-      setFileNameGLB(result.assets[0].name);
     }
-    console.log("0");
   };
   const createProduct = async () => {
-    const publicImageUrl = await imageUpload(imageUri);
-    console.log("Image uploaded to:", publicImageUrl);
+    // const publicImageUrl = await imageUpload(imageUri);
+    // console.log("Image uploaded to:", publicImageUrl);
 
-    // if (fileUrlGLB && fileNameGLB) {
-    //   const fileBlob = await fetch(fileUrlGLB).then((res) => res.blob());
-    //   const { error: glbError } = await supabase.storage
-    //     .from("user-data")
-    //     .upload(`user-uploads/${fileNameGLB}`, fileBlob, {
-    //       contentType: "model/gltf-binary",
-    //       upsert: true,
-    //     });
-    //   if (!glbError) {
-    //     glbPublicUrl = supabase.storage
-    //       .from("user-data")
-    //       .getPublicUrl(`user-uploads/${fileNameGLB}`).data.publicUrl;
-    //     console.log(glbPublicUrl);
-    //   } else {
-    //     console.error("GLB upload failed:", glbError);
-    //   }
-    // }
+    const glbUrl = await glbUpload(fileUrlGLB);
+    console.log("GLB uploaded to:", glbUrl);
 
     // save to supabase table
     setLoading(false);
