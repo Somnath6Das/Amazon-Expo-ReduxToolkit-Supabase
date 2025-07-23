@@ -68,6 +68,7 @@ export default function CreateProduct() {
     }
   };
   const createProduct = async () => {
+    setLoading(true);
     // const publicImageUrl = await imageUpload(imageUri);
     // console.log("Image uploaded to:", publicImageUrl);
 
