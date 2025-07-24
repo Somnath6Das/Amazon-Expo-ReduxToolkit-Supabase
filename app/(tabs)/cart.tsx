@@ -14,7 +14,8 @@ export default function Cart() {
   const session = useSelector((state: RootState) => state.auth.session);
   const items = useSelector((state: RootState) => state.cart.items);
   const subTotal = useSelector((state: RootState) => state.cart.subTotal);
-
+  console.log("cart.tsx :");
+  console.log(items);
   const handleRemove = (product: Product, quantity = 1) => {
     dispatch(removeItem({ product, quantity }));
   };

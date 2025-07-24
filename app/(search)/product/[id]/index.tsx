@@ -19,7 +19,6 @@ export default function ProductPage() {
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
   const cartItems = useSelector((state: RootState) => state.cart.items);
-  console.log(cartItems);
 
   const fetchProducts = useCallback(async () => {
     try {
