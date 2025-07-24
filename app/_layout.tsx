@@ -1,15 +1,16 @@
 import { setSession } from "@/store/authSlice";
-import store, { RootState } from "@/store/store";
+import store, { RootState, persistor } from "@/store/store";
 import { supabase } from "@/supabase";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
-import { AppState } from "react-native";
+import { ActivityIndicator, AppState, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import { Provider, useDispatch, useSelector } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -69,7 +70,22 @@ export default function RootLayout() {
   return (
     <GestureHandlerRootView>
       <Provider store={store}>
-        <Layout />
+        <PersistGate
+          loading={
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <ActivityIndicator size="large" />
+            </View>
+          }
+          persistor={persistor}
+        >
+          <Layout />
+        </PersistGate>
       </Provider>
     </GestureHandlerRootView>
   );

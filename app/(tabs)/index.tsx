@@ -66,6 +66,7 @@ export default function Home() {
       contentContainerStyle={{
         paddingBottom: 10,
       }}
+      showsVerticalScrollIndicator={false}
     >
       <DeliveryLocation />
       <HomeCarousel />

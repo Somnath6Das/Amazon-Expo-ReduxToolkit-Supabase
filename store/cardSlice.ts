@@ -5,12 +5,24 @@ interface CartItem {
   product: Product;
   quantity: number;
 }
+
 interface CartState {
   items: CartItem[];
+  subTotal: number;
 }
+
 const initialState: CartState = {
   items: [],
+  subTotal: 0,
 };
+
+// Utility function to calculate subtotal
+const calculateSubTotal = (items: CartItem[]) =>
+  Number(
+    items
+      .reduce((acc, item) => acc + item.product.currentPrice * item.quantity, 0)
+      .toFixed(2)
+  );
 
 const cartSlice = createSlice({
   name: "cart",
@@ -30,7 +42,10 @@ const cartSlice = createSlice({
       } else {
         state.items.push({ product, quantity });
       }
+
+      state.subTotal = calculateSubTotal(state.items);
     },
+
     removeItem: (
       state,
       action: PayloadAction<{ product: Product; quantity?: number }>
@@ -49,9 +64,17 @@ const cartSlice = createSlice({
           (item) => item.product.id !== product.id
         );
       }
+
+      state.subTotal = calculateSubTotal(state.items);
+    },
+
+    // Optional: Clear cart
+    clearCart: (state) => {
+      state.items = [];
+      state.subTotal = 0;
     },
   },
 });
 
-export const { addItem, removeItem } = cartSlice.actions;
+export const { addItem, removeItem, clearCart } = cartSlice.actions;
 export default cartSlice.reducer;
