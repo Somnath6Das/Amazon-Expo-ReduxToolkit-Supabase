@@ -1,10 +1,8 @@
 import ProductCart from "@/components/Screens/cart/ProductCart";
 import { DefaultButton } from "@/components/Shared/DefaultButton";
-import { DeliveryLocation } from "@/components/Shared/DeliveryLocation";
 import { HeaderTabsProps } from "@/components/Shared/header/HeaderTabs";
-import { clearCart, removeItem } from "@/store/cardSlice";
+import { clearCart } from "@/store/cardSlice";
 import { persistor, RootState } from "@/store/store";
-import { Product } from "@/types/product";
 import { router, useNavigation } from "expo-router";
 import React, { useEffect } from "react";
 import { Alert, Image, ScrollView, StyleSheet, Text, View } from "react-native";
@@ -16,9 +14,7 @@ export default function Cart() {
   const subTotal = useSelector((state: RootState) => state.cart.subTotal);
   console.log("cart.tsx :");
   console.log(items);
-  const handleRemove = (product: Product, quantity = 1) => {
-    dispatch(removeItem({ product, quantity }));
-  };
+
   const handleClearCart = () => {
     persistor.purge().then(() => {
       console.log("Persisted cart cleared!");
@@ -49,7 +45,6 @@ export default function Cart() {
       style={styles.container}
       contentContainerStyle={{ paddingBottom: 20 }}
     >
-      <DeliveryLocation />
       <View style={styles.innerContainer}>
         {items.length ? (
           <>
