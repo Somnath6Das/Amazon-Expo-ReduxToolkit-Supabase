@@ -11,7 +11,6 @@ import { FlatList, ScrollView } from "react-native-gesture-handler";
 
 export default function ProductPage() {
   const { id } = useLocalSearchParams();
-  console.log(id);
   const [product, setProduct] = useState<Product | null>(null);
   const [selectOpen, setSelectOpen] = useState(false);
   const [quantity, setQuantity] = useState(1);
@@ -168,13 +167,9 @@ export default function ProductPage() {
             <MCIcon name="chevron-down" size={20} />
           </TouchableOpacity>
 
-          {/* <DefaultButton onPress={() => addItem(product, quantity)
-          
-            
-              
-            }>
+          <DefaultButton onPress={() => console.log("buy now")}>
             Add to basket
-          </DefaultButton> */}
+          </DefaultButton>
 
           <DefaultButton
             style={{ backgroundColor: "#f97316" }}
@@ -197,7 +192,7 @@ export default function ProductPage() {
         >
           <View
             style={{
-              width: "60%",
+              width: "25%",
               backgroundColor: "white",
               padding: 20,
               borderRadius: 10,
