@@ -1,7 +1,7 @@
 import { supabase } from "@/supabase";
 
 export const glbUpload = async (glbUri: string | null) => {
-  if (!glbUri) throw new Error("No file URI provided");
+  if (!glbUri) return;
 
   const fileName = `${Date.now()}.glb`;
 

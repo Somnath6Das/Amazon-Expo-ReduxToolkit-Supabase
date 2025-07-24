@@ -9,7 +9,7 @@ import { RootState } from "@/store/store";
 import { supabase } from "@/supabase";
 import { Product } from "@/types/product";
 import { router, useNavigation } from "expo-router";
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Alert, ScrollView, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -17,65 +17,13 @@ export default function Home() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const session = useSelector((state: RootState) => state.auth.session);
+  const [deals, setDeals] = useState<Product[]>([]);
 
   const hendleSignout = async () => {
     dispatch(setSession(null));
     await supabase.auth.signOut();
   };
-  const deals: Product[] = [
-    {
-      id: 1,
-      name: "Wireless Mouse",
-      amountInStock: 100,
-      currentPrice: 999,
-      previousPrice: 1299,
-      deliveryPrice: 40,
-      deliveryInDays: 2,
-      isAmazonChoice: true,
-      imageUrl: "https://uniquec.com/wp-content/uploads/235.jpg",
-      model3DUrl: null,
-      user_id: 0,
-    },
-    {
-      id: 2,
-      name: "Keyboard",
-      amountInStock: 50,
-      currentPrice: 1499,
-      previousPrice: 1799,
-      deliveryPrice: 60,
-      deliveryInDays: 3,
-      isAmazonChoice: false,
-      imageUrl: "https://m.media-amazon.com/images/I/61QxkJGYxeL.jpg",
-      model3DUrl: null,
-      user_id: 0,
-    },
-    {
-      id: 3,
-      name: "Wireless Mouse",
-      amountInStock: 100,
-      currentPrice: 999,
-      previousPrice: 1299,
-      deliveryPrice: 40,
-      deliveryInDays: 2,
-      isAmazonChoice: true,
-      imageUrl: "https://uniquec.com/wp-content/uploads/235.jpg",
-      model3DUrl: null,
-      user_id: 0,
-    },
-    {
-      id: 4,
-      name: "Keyboard",
-      amountInStock: 50,
-      currentPrice: 1499,
-      previousPrice: 1799,
-      deliveryPrice: 60,
-      deliveryInDays: 3,
-      isAmazonChoice: false,
-      imageUrl: "https://m.media-amazon.com/images/I/61QxkJGYxeL.jpg",
-      model3DUrl: null,
-      user_id: 0,
-    },
-  ];
+
   const tabs: HeaderTabsProps["tabs"] = [
     {
       active: true,
@@ -91,13 +39,21 @@ export default function Home() {
       onPress: () => Alert.alert("Video"),
     },
   ];
+  const getDeals = useCallback(async () => {
+    try {
+      const { data = [] } = await supabase.from("products").select("*");
+      setDeals(data as Product[]);
+    } catch (error) {
+      console.log("error", error);
+    }
+  }, []);
   useEffect(() => {
     navigation.setOptions({
       headerSearchShown: true,
       headerTabsProps: { tabs },
     });
 
-    // getDeals();
+    getDeals();
   }, [navigation.setOptions]);
   const onProductPress = ({ id }: Product) => {
     router.push(`/product/${id}`);

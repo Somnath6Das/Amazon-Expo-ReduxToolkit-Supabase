@@ -98,7 +98,7 @@ export default function CreateProduct() {
           deliveryInDays,
           isAmazonChoice,
           imageUrl: publicImageUrl,
-          model3DUrl: glbUrl,
+          model3DUrl: glbUrl ?? null,
           user_id: session?.user?.id,
         },
       ])

@@ -9,6 +9,7 @@ interface Props {
 }
 
 export function ProductDealCard({ product, onPress }: Props) {
+  console.log(product.imageUrl);
   return (
     <Pressable onPress={onPress}>
       <View
@@ -29,7 +30,9 @@ export function ProductDealCard({ product, onPress }: Props) {
           }}
         >
           <Image
-            src={product.imageUrl ?? ""}
+            source={{
+              uri: product.imageUrl ?? "",
+            }}
             style={{ objectFit: "contain", width: "100%", height: "100%" }}
           />
         </View>
