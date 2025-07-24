@@ -9,7 +9,7 @@ interface Props {
 }
 
 export function ProductDealCard({ product, onPress }: Props) {
-  console.log(product.imageUrl);
+  // console.log(product.imageUrl);
   return (
     <Pressable onPress={onPress}>
       <View
