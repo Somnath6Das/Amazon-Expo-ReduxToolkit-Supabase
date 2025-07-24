@@ -2,7 +2,7 @@ import ProductCart from "@/components/Screens/cart/ProductCart";
 import { DefaultButton } from "@/components/Shared/DefaultButton";
 import { DeliveryLocation } from "@/components/Shared/DeliveryLocation";
 import { HeaderTabsProps } from "@/components/Shared/header/HeaderTabs";
-import { removeItem } from "@/store/cardSlice";
+import { clearCart, removeItem } from "@/store/cardSlice";
 import { persistor, RootState } from "@/store/store";
 import { Product } from "@/types/product";
 import { router, useNavigation } from "expo-router";
@@ -18,7 +18,12 @@ export default function Cart() {
   const handleRemove = (product: Product, quantity = 1) => {
     dispatch(removeItem({ product, quantity }));
   };
-
+  const handleClearCart = () => {
+    persistor.purge().then(() => {
+      console.log("Persisted cart cleared!");
+      dispatch(clearCart());
+    });
+  };
   const navigation = useNavigation();
 
   const onClickAuth = () => router.push("/(auth)");
@@ -53,11 +58,7 @@ export default function Cart() {
             </View>
 
             {session && (
-              <DefaultButton
-                onPress={() => {
-                  persistor.purge();
-                }}
-              >
+              <DefaultButton onPress={handleClearCart}>
                 {`Proceed to checkout (${items.length}) items`}
               </DefaultButton>
             )}
