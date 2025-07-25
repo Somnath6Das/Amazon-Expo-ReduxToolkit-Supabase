@@ -1,17 +1,16 @@
 import Header from "@/components/Shared/header/Header";
+import { RootState } from "@/store/store";
 import MCIcon from "@expo/vector-icons/MaterialCommunityIcons";
 import { Tabs } from "expo-router";
 import { Text, View } from "react-native";
+import { useSelector } from "react-redux";
 interface Tab {
   name: string;
   icon: "home-outline" | "account-outline" | "cart-check";
 }
 
 export default function TabLayout() {
-  // const session = useSelector((state: RootState) => state.auth.session);
-  // if (!session) {
-  //   return <Redirect href="/(auth)" />;
-  // }
+  const cartItems = useSelector((state: RootState) => state.cart.items);
   const value: number = 8;
   const tabs: Tab[] = [
     {
@@ -74,13 +73,13 @@ export default function TabLayout() {
                       position: "absolute",
                       top: 8,
                       backgroundColor:
-                        value === 0 ? "transparent" : "#de1b1bff",
+                        cartItems.length === 0 ? "transparent" : "#de1b1bff",
                       fontWeight: "bold",
                       fontSize: 12,
-                      color: value === 0 ? "transparent" : "white",
+                      color: cartItems.length === 0 ? "transparent" : "white",
                     }}
                   >
-                    {value}
+                    {cartItems.length}
                   </Text>
                 )}
               </View>

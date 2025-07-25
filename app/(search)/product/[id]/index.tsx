@@ -1,6 +1,5 @@
 import { DefaultButton } from "@/components/Shared/DefaultButton";
 import { addItem } from "@/store/cardSlice";
-import { RootState } from "@/store/store";
 import { supabase } from "@/supabase";
 import { Product } from "@/types/product";
 import { deliveryDate } from "@/utils/deliveryDate";
@@ -10,7 +9,7 @@ import { router, useLocalSearchParams } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
 import { Image, Modal, Text, TouchableOpacity, View } from "react-native";
 import { FlatList, ScrollView } from "react-native-gesture-handler";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 export default function ProductPage() {
   const { id } = useLocalSearchParams();
@@ -18,7 +17,6 @@ export default function ProductPage() {
   const [selectOpen, setSelectOpen] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
-  const cartItems = useSelector((state: RootState) => state.cart.items);
 
   const fetchProducts = useCallback(async () => {
     try {
