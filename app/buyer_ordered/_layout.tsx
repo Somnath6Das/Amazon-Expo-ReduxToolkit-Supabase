@@ -16,6 +16,14 @@ export default function Layout() {
           animation: "fade",
         }}
       />
+      <Stack.Screen
+        name="location"
+        options={{
+          headerShown: true,
+          header: (props) => <Header {...props} />,
+          presentation: "fullScreenModal",
+        }}
+      />
     </Stack>
   );
 }

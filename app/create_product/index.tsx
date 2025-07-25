@@ -27,7 +27,7 @@ export default function CreateProduct() {
   const navigation = useNavigation();
   const onGoBack = () => router.back();
   const [name, setName] = useState<string>("");
-  const [amountInStock, setAmountInStock] = useState<string>("1");
+  const [amountInStock, setAmountInStock] = useState<string>("");
   const [currentPrice, setCurrentPrice] = useState<string>("");
   const [previousPrice, setPreviousPrice] = useState<string>("");
   const [deliveryPrice, setDeliveryPrice] = useState<string>("");
