@@ -1,5 +1,6 @@
 import ProductCart from "@/components/Screens/cart/ProductCart";
 import { DefaultButton } from "@/components/Shared/DefaultButton";
+import { DeliveryLocation } from "@/components/Shared/DeliveryLocation";
 import { HeaderTabsProps } from "@/components/Shared/header/HeaderTabs";
 import { clearCart } from "@/store/cardSlice";
 import { persistor, RootState } from "@/store/store";
@@ -12,8 +13,8 @@ export default function Cart() {
   const session = useSelector((state: RootState) => state.auth.session);
   const items = useSelector((state: RootState) => state.cart.items);
   const subTotal = useSelector((state: RootState) => state.cart.subTotal);
-  console.log("cart.tsx :");
-  console.log(items);
+  // console.log("cart.tsx :");
+  // console.log(items);
 
   const handleClearCart = () => {
     persistor.purge().then(() => {
@@ -45,6 +46,7 @@ export default function Cart() {
       style={styles.container}
       contentContainerStyle={{ paddingBottom: 20 }}
     >
+      <DeliveryLocation />
       <View style={styles.innerContainer}>
         {items.length ? (
           <>
