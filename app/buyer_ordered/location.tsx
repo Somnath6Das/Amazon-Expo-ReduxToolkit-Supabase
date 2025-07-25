@@ -9,33 +9,31 @@ export default function OrderLocation() {
   const session = useSelector((state: RootState) => state.auth.session);
   const [location, setLocation] = useState<string>("");
   const [loading, setLoading] = useState(false);
-  const getLocation = async () => {
-    setLoading(true);
-    await supabase
-      .from("profiles")
-      .update({ location: location })
-      .eq("id", session?.user?.id)
-      .single();
-    const { data, error } = await supabase
-      .from("profiles")
-      .select("location")
-      .eq("id", session?.user?.id)
-      .single();
-
-    setLocation(data?.location);
-    console.log(data?.location);
-    setLoading(false);
-  };
-
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      if (location.trim() !== "") {
-        getLocation();
-      }
-    }, 1000);
+    const fetchText = async () => {
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("location")
+        .eq("id", session?.user.id)
+        .single();
 
-    return () => clearTimeout(timeout);
-  }, [location]);
+      if (data) setLocation(data.location);
+      if (error) console.error("Fetch error:", error);
+    };
+
+    fetchText();
+  }, []);
+  const handleTextChange = async (value: string) => {
+    setLoading(true);
+    setLocation(value);
+
+    const { error } = await supabase.from("profiles").upsert({
+      id: session?.user.id,
+      location: value,
+    });
+    setLoading(false);
+    if (error) console.error("Save error:", error);
+  };
 
   const navigation = useNavigation();
   const onGoBack = () => router.back();
@@ -68,25 +66,21 @@ export default function OrderLocation() {
       <Text style={{ fontSize: 20, fontFamily: "Amazon-Ember" }}>
         Give Delivery Address
       </Text>
-      <Text>{location}</Text>
+
       <TextInput
         value={location}
-        onChangeText={setLocation}
+        onChangeText={handleTextChange}
         multiline
-        autoFocus
         style={{
           borderColor: "black",
           padding: 10,
           fontFamily: "Amazon-Ember",
-
           borderWidth: 1,
-
           borderRadius: 8,
-
           minHeight: 100,
           textAlignVertical: "top",
         }}
-        placeholder="Email"
+        placeholder="Enter Delivery Location"
         autoCapitalize="none"
         autoCorrect={false}
       />
