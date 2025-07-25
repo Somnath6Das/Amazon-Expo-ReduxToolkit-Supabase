@@ -84,18 +84,17 @@ export default function OrderLocation() {
         autoCapitalize="none"
         autoCorrect={false}
       />
-      {!loading && (
-        <AntDesign
-          name="checkcircle"
-          size={18}
-          color={"green"}
-          style={{
-            position: "absolute",
-            right: 25,
-            top: 116,
-          }}
-        />
-      )}
+
+      <AntDesign
+        name="checkcircle"
+        size={18}
+        color={loading ? "#747775ff" : "green"}
+        style={{
+          position: "absolute",
+          right: 25,
+          top: 116,
+        }}
+      />
     </View>
   );
 }
