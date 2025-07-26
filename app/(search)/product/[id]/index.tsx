@@ -178,7 +178,9 @@ export default function ProductPage() {
 
           <DefaultButton
             style={{ backgroundColor: "#f97316" }}
-            onPress={() => {}}
+            onPress={() => {
+              router.push(`/buyer_ordered/buy_here?productId=${product.id}`);
+            }}
           >
             Buy Now
           </DefaultButton>
