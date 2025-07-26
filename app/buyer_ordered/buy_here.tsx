@@ -7,19 +7,29 @@ import { useSelector } from "react-redux";
 
 export default function BuyHere() {
   const session = useSelector((state: RootState) => state.auth.session);
-  const [user, setUser] = useState<any | null>(null);
+  const [product, setProduct] = useState<any | null>(null);
+  const [address, setAddress] = useState<any | null>(null);
   const { productId } = useLocalSearchParams();
 
-  const getUser = async () => {
-    const { data, error } = await supabase
+  const getUserProduct = async () => {
+    let { data, error } = await supabase
+      .from("products")
+      .select("*")
+      .eq("id", productId)
+      .single();
+    setProduct(data);
+    const { data: address, error: err } = await supabase
       .from("profiles")
-      .select()
+      .select("full_name, location")
       .eq("id", session?.user.id)
       .single();
-    setUser(data);
+    setAddress(address);
+    console.log(address?.location);
+    console.log(data.name);
   };
+
   useEffect(() => {
-    getUser();
+    getUserProduct();
   }, []);
 
   const navigation = useNavigation();
@@ -44,9 +54,11 @@ export default function BuyHere() {
     <View
       style={{ flex: 1, justifyContent: "flex-start", paddingHorizontal: 14 }}
     >
-      {user?.location ? (
+      {address?.location ? (
         <>
-          <Text style={{ fontFamily: "Amazon-Ember" }}>{user?.location}</Text>
+          <Text style={{ fontFamily: "Amazon-Ember" }}>
+            {address?.location}
+          </Text>
           <TouchableOpacity
             onPress={() => router.push("/buyer_ordered/location")}
           >
@@ -74,6 +86,7 @@ export default function BuyHere() {
           </Text>
         </TouchableOpacity>
       )}
+      <Text>{product?.name ?? null}</Text>
     </View>
   );
 }
