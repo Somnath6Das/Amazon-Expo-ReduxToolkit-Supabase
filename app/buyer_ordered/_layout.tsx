@@ -5,19 +5,10 @@ export default function Layout() {
   return (
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen
-        name="index"
-        options={{
-          headerShown: true,
-          header: (props) => <Header {...props} />,
-          animation: "fade",
-        }}
-      />
-      <Stack.Screen
         name="location"
         options={{
           headerShown: true,
           header: (props) => <Header {...props} />,
-          presentation: "fullScreenModal",
         }}
       />
       <Stack.Screen
@@ -25,7 +16,6 @@ export default function Layout() {
         options={{
           headerShown: true,
           header: (props) => <Header {...props} />,
-          presentation: "fullScreenModal",
         }}
       />
     </Stack>

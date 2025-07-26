@@ -6,7 +6,7 @@ npx expo install --fix
 
 
 # upload image to supabase
-i. desable public bucket
+i. enable public bucket
 
 # add RLS policy
 ii. Go to Supabase dashboard
