@@ -154,7 +154,6 @@ export default function ProductPage() {
               {product.amountInStock} In Stock
             </Text>
           )}
-
           <TouchableOpacity
             style={{
               flexDirection: "row",
@@ -169,17 +168,21 @@ export default function ProductPage() {
             <Text>Quantity: {quantity}</Text>
             <MCIcon name="chevron-down" size={20} />
           </TouchableOpacity>
-
           <DefaultButton
             onPress={() => dispatch(addItem({ product, quantity }))}
           >
             Add to basket
           </DefaultButton>
-
           <DefaultButton
             style={{ backgroundColor: "#f97316" }}
             onPress={() => {
-              router.push(`/buyer_ordered/buy_here?productId=${product.id}`);
+              router.push({
+                pathname: "/buyer_ordered/buy_here",
+                params: {
+                  name: product.name,
+                  quantity: quantity,
+                },
+              });
             }}
           >
             Buy Now

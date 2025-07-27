@@ -20,7 +20,7 @@ export default function Profile() {
   const onClickSignUp = () => router.push("/(auth)/signup");
 
   const clickToOrdered = async () => {
-    router.push("/buyer_ordered");
+    router.push("/buyer_ordered/my_order");
   };
   const clickToSeller = async () => {
     router.push("/(seller_activity)/seller_page");

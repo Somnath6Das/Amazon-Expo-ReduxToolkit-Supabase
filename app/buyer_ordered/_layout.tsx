@@ -18,6 +18,13 @@ export default function Layout() {
           header: (props) => <Header {...props} />,
         }}
       />
+      <Stack.Screen
+        name="my_order"
+        options={{
+          headerShown: true,
+          header: (props) => <Header {...props} />,
+        }}
+      />
     </Stack>
   );
 }

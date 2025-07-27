@@ -7,25 +7,18 @@ import { useSelector } from "react-redux";
 
 export default function BuyHere() {
   const session = useSelector((state: RootState) => state.auth.session);
-  const [product, setProduct] = useState<any | null>(null);
   const [address, setAddress] = useState<any | null>(null);
-  const { productId } = useLocalSearchParams();
+  const { name, quantity } = useLocalSearchParams();
 
   const getUserProduct = async () => {
-    let { data, error } = await supabase
-      .from("products")
-      .select("*")
-      .eq("id", productId)
-      .single();
-    setProduct(data);
     const { data: address, error: err } = await supabase
       .from("profiles")
       .select("full_name, location")
       .eq("id", session?.user.id)
       .single();
     setAddress(address);
-    console.log(address?.location);
-    console.log(data.name);
+    // console.log(address?.location);
+    // console.log(data.name);
   };
 
   useEffect(() => {
@@ -66,6 +59,7 @@ export default function BuyHere() {
               style={{
                 textDecorationLine: "underline",
                 color: "#3434bcff",
+                fontFamily: "Amazon-Ember",
               }}
             >
               Change address
@@ -80,13 +74,15 @@ export default function BuyHere() {
             style={{
               textDecorationLine: "underline",
               color: "#3434bcff",
+              fontFamily: "Amazon-Ember",
             }}
           >
             Add a address
           </Text>
         </TouchableOpacity>
       )}
-      <Text>{product?.name ?? null}</Text>
+      <Text>{name ?? null}</Text>
+      <Text>{quantity ?? null}</Text>
     </View>
   );
 }
