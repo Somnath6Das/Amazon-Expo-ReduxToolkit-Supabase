@@ -185,6 +185,7 @@ export default function ProductPage() {
                   productImage: product.imageUrl,
                   deliveryCharge: product.deliveryPrice - product.currentPrice,
                   currentPrice: product.currentPrice,
+                  achoice: String(product.isAmazonChoice),
                 },
               });
             }}

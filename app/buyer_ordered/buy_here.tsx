@@ -18,6 +18,7 @@ export default function BuyHere() {
     productImage,
     deliveryCharge,
     currentPrice,
+    achoice,
   } = useLocalSearchParams();
   const imageUrl = Array.isArray(productImage)
     ? productImage[0]
@@ -35,8 +36,8 @@ export default function BuyHere() {
 
   useEffect(() => {
     getUserProduct();
-  }, []);
-  const orderSaveDb = () => {};
+  }, [address]);
+
   const navigation = useNavigation();
   const onGoBack = () => router.back();
   useLayoutEffect(() => {
@@ -55,6 +56,24 @@ export default function BuyHere() {
       ),
     });
   }, [navigation]);
+  const orderSaveDb = async () => {
+    const { data, error } = await supabase
+      .from("orders")
+      .insert([
+        {
+          product: name,
+          delivery_address: `${address?.full_name} ${address?.location}`,
+          image: productImage,
+          buyer_id: session?.user.id,
+          current_price: currentPrice,
+          delivery_date: deliveryDate(Number(deliveryInDays)),
+        },
+      ])
+      .select();
+    if (!error) {
+      router.push("/buyer_ordered/thanks_buying");
+    }
+  };
   return (
     <View
       style={{ flex: 1, justifyContent: "flex-start", paddingHorizontal: 14 }}
@@ -143,15 +162,16 @@ export default function BuyHere() {
             style={{ fontSize: 15, marginTop: 10 }}
           >{`₹${currentPrice}`}</Text>
           <Text>{`Delivery Charge: ₹${deliveryCharge}`}</Text>
-          <Image
-            source={require("@/assets/images/amazon-images/prime-label.png")}
-            style={{
-              height: 50,
-
-              resizeMode: "contain",
-              width: 60,
-            }}
-          />
+          {achoice === "true" && (
+            <Image
+              source={require("@/assets/images/amazon-images/prime-label.png")}
+              style={{
+                height: 50,
+                resizeMode: "contain",
+                width: 60,
+              }}
+            />
+          )}
         </View>
       </View>
       <DefaultButton onPress={orderSaveDb}>
