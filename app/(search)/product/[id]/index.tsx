@@ -183,6 +183,8 @@ export default function ProductPage() {
                   quantity: quantity,
                   deliveryInDays: product.deliveryInDays,
                   productImage: product.imageUrl,
+                  deliveryCharge: product.deliveryPrice - product.currentPrice,
+                  currentPrice: product.currentPrice,
                 },
               });
             }}

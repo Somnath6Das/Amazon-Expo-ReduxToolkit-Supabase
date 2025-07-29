@@ -1,3 +1,4 @@
+import { DefaultButton } from "@/components/Shared/DefaultButton";
 import { RootState } from "@/store/store";
 import { supabase } from "@/supabase";
 import { deliveryDate } from "@/utils/deliveryDate";
@@ -10,8 +11,14 @@ import { useSelector } from "react-redux";
 export default function BuyHere() {
   const session = useSelector((state: RootState) => state.auth.session);
   const [address, setAddress] = useState<any | null>(null);
-  const { name, quantity, deliveryInDays, productImage } =
-    useLocalSearchParams();
+  const {
+    name,
+    quantity,
+    deliveryInDays,
+    productImage,
+    deliveryCharge,
+    currentPrice,
+  } = useLocalSearchParams();
   const imageUrl = Array.isArray(productImage)
     ? productImage[0]
     : productImage ?? "";
@@ -29,7 +36,7 @@ export default function BuyHere() {
   useEffect(() => {
     getUserProduct();
   }, []);
-
+  const orderSaveDb = () => {};
   const navigation = useNavigation();
   const onGoBack = () => router.back();
   useLayoutEffect(() => {
@@ -114,7 +121,7 @@ export default function BuyHere() {
           flexDirection: "row",
           padding: 20,
           backgroundColor: "#e5e5e5ff",
-          height: 300,
+          height: 190,
         }}
       >
         <Image
@@ -127,8 +134,25 @@ export default function BuyHere() {
             backgroundColor: "#f8f8f8",
           }}
         />
-        <View></View>
+        <View style={{ marginHorizontal: 10 }}>
+          <Text>{name}</Text>
+          <Text>{quantity}</Text>
+          <Text>{currentPrice}</Text>
+          <Text>{deliveryCharge}</Text>
+          <Image
+            source={require("@/assets/images/amazon-images/prime-label.png")}
+            style={{
+              height: 50,
+
+              resizeMode: "contain",
+              width: 60,
+            }}
+          />
+        </View>
       </View>
+      <DefaultButton onPress={orderSaveDb}>
+        Pay with cash on delivery
+      </DefaultButton>
     </View>
   );
 }
