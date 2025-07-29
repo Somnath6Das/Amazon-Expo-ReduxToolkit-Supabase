@@ -135,10 +135,14 @@ export default function BuyHere() {
           }}
         />
         <View style={{ marginHorizontal: 10 }}>
-          <Text>{name}</Text>
-          <Text>{quantity}</Text>
-          <Text>{currentPrice}</Text>
-          <Text>{deliveryCharge}</Text>
+          <Text style={{ fontSize: 20 }}>{name}</Text>
+          <Text
+            style={{ fontSize: 15, marginTop: 10 }}
+          >{`Quantity:${quantity}`}</Text>
+          <Text
+            style={{ fontSize: 15, marginTop: 10 }}
+          >{`₹${currentPrice}`}</Text>
+          <Text>{`Delivery Charge: ₹${deliveryCharge}`}</Text>
           <Image
             source={require("@/assets/images/amazon-images/prime-label.png")}
             style={{
