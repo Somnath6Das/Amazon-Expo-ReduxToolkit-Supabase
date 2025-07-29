@@ -19,6 +19,8 @@ export default function BuyHere() {
     deliveryCharge,
     currentPrice,
     achoice,
+    deliveryPrice,
+    sellerId,
   } = useLocalSearchParams();
   const imageUrl = Array.isArray(productImage)
     ? productImage[0]
@@ -61,12 +63,14 @@ export default function BuyHere() {
       .from("orders")
       .insert([
         {
-          product: name,
+          product_name: name,
           delivery_address: `${address?.full_name} ${address?.location}`,
           image: productImage,
           buyer_id: session?.user.id,
           current_price: currentPrice,
           delivery_date: deliveryDate(Number(deliveryInDays)),
+          delivery_price: deliveryPrice,
+          seller_id: sellerId,
         },
       ])
       .select();
@@ -174,7 +178,7 @@ export default function BuyHere() {
           )}
         </View>
       </View>
-      <DefaultButton onPress={orderSaveDb}>
+      <DefaultButton onPress={orderSaveDb} style={{ marginTop: 20 }}>
         Pay with cash on delivery
       </DefaultButton>
     </View>

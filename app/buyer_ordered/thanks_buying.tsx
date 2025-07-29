@@ -16,12 +16,19 @@ export default function ThanksBuying() {
         style={{
           fontSize: 30,
           fontFamily: "Amazon-Ember-Bold",
-          color: "yellow",
+          color: "white",
+          backgroundColor: "#034e0bff",
+          padding: 10,
+          borderRadius: 20,
         }}
       >
         Thanks you for Buying!
       </Text>
-      <AntDesign name="checkcircle" size={100} color="white" />
+      <View
+        style={{ backgroundColor: "white", padding: 10, borderRadius: 100 }}
+      >
+        <AntDesign name="checkcircle" size={100} color="#034e0bff" />
+      </View>
     </View>
   );
 }

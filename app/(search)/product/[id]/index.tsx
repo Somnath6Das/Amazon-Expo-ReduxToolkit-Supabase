@@ -186,6 +186,8 @@ export default function ProductPage() {
                   deliveryCharge: product.deliveryPrice - product.currentPrice,
                   currentPrice: product.currentPrice,
                   achoice: String(product.isAmazonChoice),
+                  deliveryPrice: product.deliveryPrice,
+                  sellerId: product.user_id,
                 },
               });
             }}

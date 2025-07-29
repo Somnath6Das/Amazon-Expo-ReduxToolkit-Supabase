@@ -7,7 +7,7 @@ interface Props {
 export default function MyProductCard({ product }: Props) {
   return (
     <View>
-      <Text style={{ backgroundColor: "red" }}>Hello</Text>
+      <Text style={{ backgroundColor: "red" }}>{product.name}</Text>
     </View>
   );
 }
