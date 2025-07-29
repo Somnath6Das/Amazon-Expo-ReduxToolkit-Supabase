@@ -181,6 +181,8 @@ export default function ProductPage() {
                 params: {
                   name: product.name,
                   quantity: quantity,
+                  deliveryInDays: product.deliveryInDays,
+                  productImage: product.imageUrl,
                 },
               });
             }}
