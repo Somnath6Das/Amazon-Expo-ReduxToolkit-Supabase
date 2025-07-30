@@ -171,7 +171,8 @@ export default function Profile() {
                       undeliveredCount === 0 ? "transparent" : "#de1b1bff",
                     color: undeliveredCount === 0 ? "transparent" : "white",
                     fontWeight: "bold",
-                    fontSize: 20,
+                    fontSize: 18,
+                    padding: 40,
                   }}
                 >
                   {undeliveredCount}
