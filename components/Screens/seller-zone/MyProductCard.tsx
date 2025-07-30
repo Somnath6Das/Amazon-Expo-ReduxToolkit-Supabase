@@ -1,10 +1,11 @@
 import { Product } from "@/types/product";
-import { Image, Text, View } from "react-native";
-
+import AntDesign from "@expo/vector-icons/AntDesign";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 interface Props {
   product: Product;
 }
 export default function MyProductCard({ product }: Props) {
+  const productDelete = () => {};
   return (
     <View
       style={{
@@ -31,7 +32,7 @@ export default function MyProductCard({ product }: Props) {
         style={{
           fontSize: 16,
           alignSelf: "flex-start",
-          width: 160,
+          width: 110,
           flexWrap: "wrap",
           fontFamily: "Amazon-Ember",
         }}
@@ -58,6 +59,16 @@ export default function MyProductCard({ product }: Props) {
           fontFamily: "Amazon-Ember",
         }}
       >{`D.P ₹${product.deliveryPrice}`}</Text>
+      <TouchableOpacity onPress={productDelete}>
+        <AntDesign
+          name="delete"
+          size={21}
+          color="red"
+          style={{
+            alignSelf: "flex-start",
+          }}
+        />
+      </TouchableOpacity>
     </View>
   );
 }
