@@ -1,4 +1,4 @@
-import MyProductCard from "@/components/Screens/seller/MyProductCard";
+import MyProductCard from "@/components/Screens/seller-zone/MyProductCard";
 import { DefaultButton } from "@/components/Shared/DefaultButton";
 import { RootState } from "@/store/store";
 import { supabase } from "@/supabase";

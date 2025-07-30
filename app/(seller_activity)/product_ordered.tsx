@@ -1,4 +1,4 @@
-import MyOrderedCard from "@/components/Screens/seller/MyOrderedCard";
+import MyOrderedCard from "@/components/Screens/seller-zone/MyOrderedCard";
 import { RootState } from "@/store/store";
 import { supabase } from "@/supabase";
 import { Order } from "@/types/order";
