@@ -1,9 +1,11 @@
+import { setUndeliverdCount } from "@/store/orderCountSlice";
 import { RootState } from "@/store/store";
 import { supabase } from "@/supabase";
+import { getUndeliverdCount } from "@/utils/getUndeliverdCount";
 import Checkbox from "expo-checkbox";
 import { useState } from "react";
 import { Image, Text, View } from "react-native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 type OrderRow = {
   id: number;
@@ -16,6 +18,7 @@ type OrderRow = {
 export default function MyOrderedCard({ order }: { order: OrderRow }) {
   const [deleverd, setDeliverd] = useState(order.is_delivered);
   const session = useSelector((state: RootState) => state.auth.session);
+  const dispatch = useDispatch();
 
   const checkDelevered = async (newValue: boolean) => {
     setDeliverd(newValue);
@@ -30,6 +33,11 @@ export default function MyOrderedCard({ order }: { order: OrderRow }) {
     // console.log("Need to change RLS based on seller_id:", order.id);
     if (error) {
       console.error("Update failed:", error);
+    } else {
+      const count = await getUndeliverdCount(session?.user.id);
+      if (count !== null) {
+        dispatch(setUndeliverdCount(count));
+      }
     }
   };
 

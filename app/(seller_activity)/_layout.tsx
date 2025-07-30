@@ -1,9 +1,7 @@
 import Header from "@/components/Shared/header/Header";
 import { RootState } from "@/store/store";
-import { getUndeliverdCount } from "@/utils/getUndeliverdCount";
 import Entypo from "@expo/vector-icons/Entypo";
 import { Tabs } from "expo-router";
-import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import { useSelector } from "react-redux";
 interface Tab {
@@ -12,19 +10,21 @@ interface Tab {
 }
 
 export default function TabLayout() {
-  const session = useSelector((state: RootState) => state.auth.session);
-  const [undeliveredCount, setUndeliveredCount] = useState<number | null>(null);
-  useEffect(() => {
-    let count;
-    const fetchCount = async () => {
-      if (session?.user?.id) {
-        count = await getUndeliverdCount(session.user.id);
-        setUndeliveredCount(count);
-      }
-    };
+  // const session = useSelector((state: RootState) => state.auth.session);
+  const undeliveredCount = useSelector(
+    (state: RootState) => state.orderCount.undeliverdCount
+  );
+  // const [undeliveredCount, setUndeliveredCount] = useState<number | null>(null);
+  // useEffect(() => {
+  //   const fetchCount = async () => {
+  //     if (session?.user?.id) {
+  //       const count = await getUndeliverdCount(session.user.id);
+  //       setUndeliveredCount(count);
+  //     }
+  //   };
 
-    fetchCount();
-  }, [undeliveredCount]);
+  //   fetchCount();
+  // }, [undeliveredCount]);
   // const value: number = 8;
   const tabs: Tab[] = [
     {

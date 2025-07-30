@@ -3,7 +3,6 @@ import { ProfileUnauthedBanner } from "@/components/Screens/profile/ProfileUnaut
 import { DefaultButton } from "@/components/Shared/DefaultButton";
 import { RootState } from "@/store/store";
 import { supabase } from "@/supabase";
-import { getUndeliverdCount } from "@/utils/getUndeliverdCount";
 import Icon from "@expo/vector-icons/Ionicons";
 import BottomSheet from "@gorhom/bottom-sheet";
 
@@ -14,6 +13,9 @@ import { useSelector } from "react-redux";
 
 export default function Profile() {
   const session = useSelector((state: RootState) => state.auth.session);
+  const undeliveredCount = useSelector(
+    (state: RootState) => state.orderCount.undeliverdCount
+  );
   const navigation = useNavigation();
   const bottomSheetRef = useRef<BottomSheet>(null);
   const [isSeller, setIsSeller] = useState<any>("");
@@ -29,18 +31,7 @@ export default function Profile() {
   const openSheet = useCallback(() => {
     bottomSheetRef.current?.expand();
   }, []);
-  const [undeliveredCount, setUndeliveredCount] = useState<number | null>(null);
-  useEffect(() => {
-    let count;
-    const fetchCount = async () => {
-      if (session?.user?.id) {
-        count = await getUndeliverdCount(session.user.id);
-        setUndeliveredCount(count);
-      }
-    };
 
-    fetchCount();
-  }, [undeliveredCount]);
   useEffect(() => {
     navigation.setOptions({
       headerSearchShown: Boolean(session),

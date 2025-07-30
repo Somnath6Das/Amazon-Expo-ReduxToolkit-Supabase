@@ -12,6 +12,7 @@ import {
 } from "redux-persist";
 import authReducer from "./authSlice";
 import cartReducer from "./cardSlice"; // You might want to rename this to cartSlice for clarity
+import orderCountSlice from "./orderCountSlice";
 
 // ✅ Only persist cart
 const persistConfig = {
@@ -23,6 +24,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   auth: authReducer, // not persisted
   cart: cartReducer, // persisted
+  orderCount: orderCountSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
