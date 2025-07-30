@@ -1,3 +1,4 @@
+import { supabase } from "@/supabase";
 import { Product } from "@/types/product";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { Image, Text, TouchableOpacity, View } from "react-native";
@@ -5,7 +6,12 @@ interface Props {
   product: Product;
 }
 export default function MyProductCard({ product }: Props) {
-  const productDelete = () => {};
+  const productDelete = async () => {
+    const { error } = await supabase
+      .from("products")
+      .delete()
+      .eq("id", product.id);
+  };
   return (
     <View
       style={{
