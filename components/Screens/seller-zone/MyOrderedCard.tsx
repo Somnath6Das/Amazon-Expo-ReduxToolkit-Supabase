@@ -16,8 +16,10 @@ type OrderRow = {
 export default function MyOrderedCard({ order }: { order: OrderRow }) {
   const [deleverd, setDeliverd] = useState(order.is_delivered);
   const session = useSelector((state: RootState) => state.auth.session);
+
   const checkDelevered = async (newValue: boolean) => {
     setDeliverd(newValue);
+
     const { data, error } = await supabase
       .from("orders")
       .update({ is_delivered: newValue })
@@ -25,7 +27,7 @@ export default function MyOrderedCard({ order }: { order: OrderRow }) {
       .eq("seller_id", session?.user.id)
       .select();
 
-    console.log("Need to change RLS based on seller_id:", order.id);
+    // console.log("Need to change RLS based on seller_id:", order.id);
     if (error) {
       console.error("Update failed:", error);
     }

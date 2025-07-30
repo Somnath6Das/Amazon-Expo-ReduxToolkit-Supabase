@@ -3,6 +3,7 @@ import { ProfileUnauthedBanner } from "@/components/Screens/profile/ProfileUnaut
 import { DefaultButton } from "@/components/Shared/DefaultButton";
 import { RootState } from "@/store/store";
 import { supabase } from "@/supabase";
+import { getUndeliverdCount } from "@/utils/getUndeliverdCount";
 import Icon from "@expo/vector-icons/Ionicons";
 import BottomSheet from "@gorhom/bottom-sheet";
 
@@ -28,7 +29,18 @@ export default function Profile() {
   const openSheet = useCallback(() => {
     bottomSheetRef.current?.expand();
   }, []);
+  const [undeliveredCount, setUndeliveredCount] = useState<number | null>(null);
+  useEffect(() => {
+    let count;
+    const fetchCount = async () => {
+      if (session?.user?.id) {
+        count = await getUndeliverdCount(session.user.id);
+        setUndeliveredCount(count);
+      }
+    };
 
+    fetchCount();
+  }, [undeliveredCount]);
   useEffect(() => {
     navigation.setOptions({
       headerSearchShown: Boolean(session),
@@ -153,11 +165,26 @@ export default function Profile() {
             </DefaultButton>
             {isSeller && (
               <DefaultButton
-                style={{ width: "50%" }}
+                style={{
+                  width: "50%",
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
                 onPress={clickToSeller}
                 variant="secondary"
               >
-                Seller Zone
+                Seller Zone{"  "}
+                <Text
+                  style={{
+                    backgroundColor:
+                      undeliveredCount === 0 ? "transparent" : "#de1b1bff",
+                    color: undeliveredCount === 0 ? "transparent" : "white",
+                    fontWeight: "bold",
+                    fontSize: 20,
+                  }}
+                >
+                  {undeliveredCount}
+                </Text>
               </DefaultButton>
             )}
           </View>
