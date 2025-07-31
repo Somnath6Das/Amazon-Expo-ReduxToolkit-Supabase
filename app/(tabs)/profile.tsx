@@ -155,29 +155,35 @@ export default function Profile() {
               Ordered
             </DefaultButton>
             {isSeller && (
-              <DefaultButton
-                style={{
-                  width: "50%",
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-                onPress={clickToSeller}
-                variant="secondary"
-              >
-                Seller Zone{"  "}
+              <>
+                <DefaultButton
+                  style={{
+                    width: "50%",
+                    flexDirection: "row",
+                    alignItems: "center",
+                  }}
+                  onPress={clickToSeller}
+                  variant="secondary"
+                >
+                  Seller Zone{"  "}
+                </DefaultButton>
                 <Text
                   style={{
                     backgroundColor:
                       undeliveredCount === 0 ? "transparent" : "#de1b1bff",
                     color: undeliveredCount === 0 ? "transparent" : "white",
                     fontWeight: "bold",
-                    fontSize: 18,
-                    padding: 40,
+                    fontSize: 22,
+                    paddingHorizontal: 8,
+                    borderRadius: 100,
+                    position: "absolute",
+                    right: 18,
+                    top: 11,
                   }}
                 >
                   {undeliveredCount}
                 </Text>
-              </DefaultButton>
+              </>
             )}
           </View>
         )}

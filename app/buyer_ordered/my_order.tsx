@@ -2,7 +2,7 @@ import OrdersCard from "@/components/Screens/buyer_order/OrdersCard";
 import { RootState } from "@/store/store";
 import { supabase } from "@/supabase";
 import { useEffect, useState } from "react";
-import { View } from "react-native";
+import { Text, View } from "react-native";
 import { useSelector } from "react-redux";
 
 export default function MyOrder() {
@@ -29,6 +29,15 @@ export default function MyOrder() {
         justifyContent: "flex-start",
       }}
     >
+      <Text
+        style={{
+          fontFamily: "Amazon-Ember-Bold",
+          fontSize: 25,
+          marginBottom: 10,
+        }}
+      >
+        Your Orders
+      </Text>
       {getOrder?.map((order) => (
         <OrdersCard key={order.id} order={order} />
       ))}
