@@ -15,7 +15,7 @@ export default function MyOrder() {
       .eq("buyer_id", session?.user.id)
       .order("created_at", { ascending: true });
     setGetOrder(orders);
-    console.log(getOrder);
+    // console.log(getOrder);
   };
   useEffect(() => {
     allOrders();
