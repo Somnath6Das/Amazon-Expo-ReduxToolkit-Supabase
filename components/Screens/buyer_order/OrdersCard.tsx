@@ -20,6 +20,8 @@ export default function OrdersCard({ order }: { order: OrderRow }) {
           width: "100%",
           flexDirection: "row",
           gap: 10,
+          marginBottom: 10,
+          marginTop: 10,
         }}
       >
         <Image

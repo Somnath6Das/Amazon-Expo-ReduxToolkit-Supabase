@@ -5,8 +5,9 @@ import { HeaderTabsProps } from "@/components/Shared/header/HeaderTabs";
 import { clearCart } from "@/store/cardSlice";
 import { persistor, RootState } from "@/store/store";
 import { supabase } from "@/supabase";
+import { deliveryDate } from "@/utils/deliveryDate";
 import { router, useNavigation } from "expo-router";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert, Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 export default function Cart() {
@@ -14,23 +15,37 @@ export default function Cart() {
   const session = useSelector((state: RootState) => state.auth.session);
   const items = useSelector((state: RootState) => state.cart.items);
   const subTotal = useSelector((state: RootState) => state.cart.subTotal);
-  console.log("cart.tsx :");
-  console.log(items);
-
+  const [address, setAddress] = useState<any | null>(null);
+  // console.log("cart.tsx :");
+  // console.log(items);
+  const getUserProduct = async () => {
+    const { data: address, error: err } = await supabase
+      .from("profiles")
+      .select("full_name, location")
+      .eq("id", session?.user.id)
+      .single();
+    setAddress(address);
+    // console.log(address?.location);
+    // console.log(data.name);
+  };
+  useEffect(() => {
+    getUserProduct();
+  }, [address]);
   const handleClearCart = async () => {
     const formattedOrders = items.map((item) => {
       const { product, quantity } = item;
 
       return {
         product_name: product.name,
-        delivery_address: deliveryAddress,
+        delivery_address: `${address?.full_name} ${address?.location}`,
         image: product.imageUrl,
-        buyer_id: buyerId,
+        buyer_id: session?.user.id,
         current_price: product.currentPrice,
-        delivery_date: deliveryDate,
-        is_delivered: false,
+        delivery_date: deliveryDate(Number(product.deliveryInDays)),
         delivery_price: product.deliveryPrice,
         seller_id: product.user_id,
+        quantity,
+        total: Number(product.deliveryPrice) * Number(quantity),
       };
     });
 
@@ -47,7 +62,7 @@ export default function Cart() {
       // Optionally clear cart
     }
     persistor.purge().then(() => {
-      // console.log("Persisted cart cleared!");
+      console.log("Persisted cart cleared!");
       dispatch(clearCart());
     });
   };
@@ -81,7 +96,7 @@ export default function Cart() {
           <>
             <View style={styles.subtotalRow}>
               <Text style={styles.subtotalLabel}>Subtotal:</Text>
-              <Text style={styles.subtotalValue}>${subTotal}</Text>
+              <Text style={styles.subtotalValue}>₹{subTotal}</Text>
             </View>
 
             {session && (

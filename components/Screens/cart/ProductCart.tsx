@@ -37,7 +37,7 @@ export default function ProductCart({ product, quantity }: Props) {
           <Text numberOfLines={4} ellipsizeMode="tail" style={styles.name}>
             {product.name}
           </Text>
-          <Text style={styles.price}>${product.currentPrice}</Text>
+          <Text style={styles.price}>₹{product.currentPrice}</Text>
           {product.isAmazonChoice && (
             <Image
               source={require("@/assets/images/amazon-images/prime-label.png")}
@@ -45,7 +45,7 @@ export default function ProductCart({ product, quantity }: Props) {
             />
           )}
           <Text style={styles.delivery}>
-            {product.deliveryPrice === 0 ? "FREE" : `$${product.deliveryPrice}`}{" "}
+            {product.deliveryPrice === 0 ? "FREE" : `₹${product.deliveryPrice}`}{" "}
             Delivery
           </Text>
         </View>
