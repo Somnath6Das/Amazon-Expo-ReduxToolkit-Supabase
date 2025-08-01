@@ -48,7 +48,7 @@ export default function MyOrderedCard({ order }: { order: OrderRow }) {
         width: "100%",
         flexDirection: "row",
         backgroundColor: "#d8d8d8ff",
-
+        marginBottom: 10,
         paddingVertical: 14,
         borderRadius: 10,
         gap: 3,
@@ -73,7 +73,7 @@ export default function MyOrderedCard({ order }: { order: OrderRow }) {
           fontFamily: "Amazon-Ember",
         }}
       >
-        {order.product_name.split(" ").length > 4
+        {order.product_name.split(" ").length > 3
           ? order.product_name.split(" ").slice(0, 8).join(" ") + "..."
           : order.product_name}
       </Text>
