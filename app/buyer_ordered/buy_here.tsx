@@ -71,6 +71,8 @@ export default function BuyHere() {
           delivery_date: deliveryDate(Number(deliveryInDays)),
           delivery_price: deliveryPrice,
           seller_id: sellerId,
+          quantity,
+          total: Number(deliveryPrice) * Number(quantity),
         },
       ])
       .select();
@@ -166,6 +168,9 @@ export default function BuyHere() {
             style={{ fontSize: 15, marginTop: 10 }}
           >{`₹${currentPrice}`}</Text>
           <Text>{`Delivery Charge: ₹${deliveryCharge}`}</Text>
+          <Text style={{ fontSize: 15, marginTop: 10 }}>{`Sub Total: ₹${
+            Number(deliveryPrice) * Number(quantity)
+          }`}</Text>
           {achoice === "true" && (
             <Image
               source={require("@/assets/images/amazon-images/prime-label.png")}

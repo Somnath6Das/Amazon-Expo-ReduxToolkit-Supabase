@@ -4,6 +4,7 @@ import { DeliveryLocation } from "@/components/Shared/DeliveryLocation";
 import { HeaderTabsProps } from "@/components/Shared/header/HeaderTabs";
 import { clearCart } from "@/store/cardSlice";
 import { persistor, RootState } from "@/store/store";
+import { supabase } from "@/supabase";
 import { router, useNavigation } from "expo-router";
 import React, { useEffect } from "react";
 import { Alert, Image, ScrollView, StyleSheet, Text, View } from "react-native";
@@ -13,12 +14,40 @@ export default function Cart() {
   const session = useSelector((state: RootState) => state.auth.session);
   const items = useSelector((state: RootState) => state.cart.items);
   const subTotal = useSelector((state: RootState) => state.cart.subTotal);
-  // console.log("cart.tsx :");
-  // console.log(items);
+  console.log("cart.tsx :");
+  console.log(items);
 
-  const handleClearCart = () => {
+  const handleClearCart = async () => {
+    const formattedOrders = items.map((item) => {
+      const { product, quantity } = item;
+
+      return {
+        product_name: product.name,
+        delivery_address: deliveryAddress,
+        image: product.imageUrl,
+        buyer_id: buyerId,
+        current_price: product.currentPrice,
+        delivery_date: deliveryDate,
+        is_delivered: false,
+        delivery_price: product.deliveryPrice,
+        seller_id: product.user_id,
+      };
+    });
+
+    // Insert all orders at once
+    const { data, error } = await supabase
+      .from("orders")
+      .insert(formattedOrders);
+
+    if (error) {
+      console.error("Error placing order:", error.message);
+      Alert.alert("Checkout Failed", error.message); // Optional
+    } else {
+      Alert.alert("Order Success", "Your order has been placed!");
+      // Optionally clear cart
+    }
     persistor.purge().then(() => {
-      console.log("Persisted cart cleared!");
+      // console.log("Persisted cart cleared!");
       dispatch(clearCart());
     });
   };

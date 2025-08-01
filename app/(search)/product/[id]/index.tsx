@@ -108,7 +108,7 @@ export default function ProductPage() {
             </Text>
           )}
           <Text style={{ fontSize: 30 }}>
-            <Text style={{ fontSize: 20 }}>$</Text>
+            <Text style={{ fontSize: 20 }}>₹</Text>
             {product.currentPrice}
           </Text>
         </View>
@@ -121,7 +121,7 @@ export default function ProductPage() {
             marginBottom: 20,
           }}
         >
-          RRP: ${product.previousPrice}
+          RRP: ₹{product.previousPrice}
         </Text>
 
         {product.isAmazonChoice && (
@@ -138,7 +138,7 @@ export default function ProductPage() {
 
         <View style={{ flexDirection: "row", marginVertical: 20 }}>
           <Text>
-            {product.deliveryPrice === 0 ? "FREE" : `$${product.deliveryPrice}`}{" "}
+            {product.deliveryPrice === 0 ? "FREE" : `₹${product.deliveryPrice}`}{" "}
             Delivery{" "}
           </Text>
           <Text style={{ fontWeight: "bold" }}>
