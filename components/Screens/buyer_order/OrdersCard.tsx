@@ -7,6 +7,9 @@ type OrderRow = {
   delivery_address: string;
   current_price: number;
   delivery_date: string;
+  delivery_price: number;
+  quantity: number;
+  total: number;
 };
 export default function OrdersCard({ order }: { order: OrderRow }) {
   return (
@@ -16,13 +19,14 @@ export default function OrdersCard({ order }: { order: OrderRow }) {
           height: 100,
           width: "100%",
           flexDirection: "row",
+          gap: 10,
         }}
       >
         <Image
           source={{ uri: order.image ?? "" }}
           style={{
             objectFit: "contain",
-            height: 80,
+            height: 100,
             width: 100,
             alignSelf: "center",
             borderRadius: 20,
@@ -34,10 +38,11 @@ export default function OrdersCard({ order }: { order: OrderRow }) {
               ? order.product_name.split(" ").slice(0, 4).join(" ") + "..."
               : order.product_name}
           </Text>
-          <Text>{`₹ ${order.current_price}`}</Text>
+          <Text>{`Sub Total₹ ${order.total}`}</Text>
+          <Text>{`Quantity: ${order.quantity}`}</Text>
           <Text>{order.delivery_date}</Text>
           {order.is_delivered ? (
-            <Text>Product Deliverd</Text>
+            <Text style={{ color: "green" }}>Product Deliverd</Text>
           ) : (
             <Text>Delivery Pending...</Text>
           )}
