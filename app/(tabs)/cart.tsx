@@ -49,22 +49,19 @@ export default function Cart() {
       };
     });
 
-    // Insert all orders at once
     const { data, error } = await supabase
       .from("orders")
       .insert(formattedOrders);
 
     if (error) {
       console.error("Error placing order:", error.message);
-      Alert.alert("Checkout Failed", error.message); // Optional
-    } else {
-      Alert.alert("Order Success", "Your order has been placed!");
-      // Optionally clear cart
+      // Alert.alert("Checkout Failed", error.message); // Optional
     }
     persistor.purge().then(() => {
       console.log("Persisted cart cleared!");
       dispatch(clearCart());
     });
+    router.push("/buyer_ordered/thanks_buying");
   };
   const navigation = useNavigation();
 

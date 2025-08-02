@@ -362,7 +362,7 @@ export default function CreateProduct() {
             fontFamily: "Amazon-Ember",
           }}
         >
-          Uplaod .glb
+          Add Product 3D Model .glb file
         </Text>
         {fileUrlGLB ? (
           <View>
@@ -396,7 +396,7 @@ export default function CreateProduct() {
                   color: "#b6b6b6ff",
                 }}
               >
-                Upload .glb
+                Add Product 3D Model .glb file
               </Text>
               <AntDesign name="addfile" size={18} color="black" />
             </View>

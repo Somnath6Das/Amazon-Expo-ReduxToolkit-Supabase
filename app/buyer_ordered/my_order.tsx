@@ -13,7 +13,7 @@ export default function MyOrder() {
       .from("orders")
       .select("*")
       .eq("buyer_id", session?.user.id)
-      .order("created_at", { ascending: true });
+      .order("created_at", { ascending: false });
     setGetOrder(orders);
     // console.log(getOrder);
   };
