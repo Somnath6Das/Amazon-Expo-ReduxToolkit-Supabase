@@ -34,7 +34,7 @@ export default function ProductPage() {
   }, [id]);
 
   const onViewType = (viewType: "3D" | "AR") => {
-    router.push(`/product/${viewType}?modelUrl=${product?.model3DUrl}`);
+    router.push(`/product/[id]/${viewType}?modelUrl=${product?.model3DUrl}`);
   };
 
   const onSelectQuantity = (num: number) => {

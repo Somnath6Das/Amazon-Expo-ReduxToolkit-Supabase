@@ -13,8 +13,8 @@ export default function SearchLayout() {
     >
       <Stack.Screen name="index" />
       <Stack.Screen name="product/[id]/index" />
-      <Stack.Screen name="product/3D" options={{ headerShown: false }} />
-      <Stack.Screen name="product/AR" options={{ headerShown: false }} />
+      <Stack.Screen name="product/[id]/3D" options={{ headerShown: false }} />
+      <Stack.Screen name="product/[id]/AR" options={{ headerShown: false }} />
     </Stack>
   );
 }

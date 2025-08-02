@@ -67,7 +67,7 @@ export default function CameraPan() {
   const router = useRouter();
   return (
     <View style={styles.container}>
-      <FloatingBackButton onPress={() => router.push("/(tabs)")} />
+      <FloatingBackButton onPress={() => router.back()} />
       <FilamentScene>
         <Scene modelUrl={modelUrl} />
       </FilamentScene>
