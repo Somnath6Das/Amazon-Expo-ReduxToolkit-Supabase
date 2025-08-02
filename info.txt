@@ -25,3 +25,8 @@ viii. sql field:
 auth.role() = 'anon'
 
 
+# for 3d view
+React Native Filament: https://margelo.github.io/react-native-filament/docs/guides
+
+# for AR view
+Viro: https://viro-community.readme.io/docs/installation-instructions
