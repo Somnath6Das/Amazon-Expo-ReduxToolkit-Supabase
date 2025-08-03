@@ -8,7 +8,6 @@ import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import { ActivityIndicator, AppState, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 
@@ -25,9 +24,9 @@ function Layout() {
   const dispatch = useDispatch();
   const session = useSelector((state: RootState) => state.auth.session);
   const [loaded, error] = useFonts({
-    "Amazon-Ember-Bold": require("@/assets/fonts/Amazon-Ember-Bold.ttf"),
-    "Amazon-Ember-Light": require("@/assets/fonts/Amazon-Ember-Light.ttf"),
-    "Amazon-Ember": require("@/assets/fonts/Amazon-Ember.ttf"),
+    AmazonEmberBold: require("@/assets/fonts/Amazon-Ember-Bold.ttf"),
+    AmazonEmberlight: require("@/assets/fonts/Amazon-Ember-Light.ttf"),
+    AmazonEmber: require("@/assets/fonts/Amazon-Ember.ttf"),
   });
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
