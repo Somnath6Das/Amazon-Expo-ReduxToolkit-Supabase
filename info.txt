@@ -29,4 +29,6 @@ auth.role() = 'anon'
 React Native Filament: https://margelo.github.io/react-native-filament/docs/guides
 
 # for AR view
-Viro: https://viro-community.readme.io/docs/installation-instructions
+Viro: 
+https://viro-community.readme.io/docs/installation-instructions
+https://viro-community.readme.io/docs/integrating-with-expo
