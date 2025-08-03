@@ -1,6 +1,9 @@
 import Header from "@/components/Shared/header/Header";
+import {
+  HeaderLeftBack,
+  HeaderTitleApp,
+} from "@/components/Shared/header/HeaderTitle";
 import { router, Stack } from "expo-router";
-import { Pressable, Text } from "react-native";
 
 export default function Layout() {
   const onGoBack = () => router.back();
@@ -12,18 +15,8 @@ export default function Layout() {
           headerShown: true,
           header: (props) => <Header {...props} />,
           gestureEnabled: true,
-          headerLeft: () => (
-            <Pressable onPress={onGoBack}>
-              <Text style={{ fontSize: 18, fontFamily: "Amazon-Ember-Light" }}>
-                Back
-              </Text>
-            </Pressable>
-          ),
-          headerTitle: () => (
-            <Text style={{ fontSize: 18, fontFamily: "Amazon-Ember-Bold" }}>
-              Amazon.in
-            </Text>
-          ),
+          headerLeft: () => <HeaderLeftBack onPress={onGoBack} />,
+          headerTitle: () => <HeaderTitleApp />,
         }}
       />
     </Stack>

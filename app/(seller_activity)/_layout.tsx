@@ -1,8 +1,12 @@
 import Header from "@/components/Shared/header/Header";
+import {
+  HeaderLeftBack,
+  HeaderTitleApp,
+} from "@/components/Shared/header/HeaderTitle";
 import { RootState } from "@/store/store";
 import Entypo from "@expo/vector-icons/Entypo";
 import { router, Tabs } from "expo-router";
-import { Pressable, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { useSelector } from "react-redux";
 interface Tab {
   name: string;
@@ -38,20 +42,8 @@ export default function TabLayout() {
               borderTopColor: "lightgray",
             },
             header: (props) => <Header {...props} />,
-            headerLeft: () => (
-              <Pressable onPress={onGoBack}>
-                <Text
-                  style={{ fontSize: 18, fontFamily: "Amazon-Ember-Light" }}
-                >
-                  Back
-                </Text>
-              </Pressable>
-            ),
-            headerTitle: () => (
-              <Text style={{ fontSize: 18, fontFamily: "Amazon-Ember-Bold" }}>
-                Amazon.in
-              </Text>
-            ),
+            headerLeft: () => <HeaderLeftBack onPress={onGoBack} />,
+            headerTitle: () => <HeaderTitleApp />,
             tabBarLabel: () => null,
             tabBarIcon: ({ focused }) => (
               <View

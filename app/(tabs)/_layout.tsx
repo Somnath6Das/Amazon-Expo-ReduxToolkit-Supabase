@@ -1,15 +1,32 @@
 import Header from "@/components/Shared/header/Header";
+import { setUndeliverdCount } from "@/store/orderCountSlice";
 import { RootState } from "@/store/store";
+import { getUndeliverdCount } from "@/utils/getUndeliverdCount";
 import MCIcon from "@expo/vector-icons/MaterialCommunityIcons";
 import { Tabs } from "expo-router";
+import { useEffect } from "react";
 import { Text, View } from "react-native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 interface Tab {
   name: string;
   icon: "home-outline" | "account-outline" | "cart-check";
 }
 
 export default function TabLayout() {
+  const session = useSelector((state: RootState) => state.auth.session);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const fetchCount = async () => {
+      if (session?.user?.id) {
+        const count = await getUndeliverdCount(session?.user.id);
+        if (count !== null) {
+          dispatch(setUndeliverdCount(count));
+        }
+      }
+    };
+
+    fetchCount();
+  }, [session?.user.id]);
   const cartItems = useSelector((state: RootState) => state.cart.items);
   const value: number = 8;
   const tabs: Tab[] = [

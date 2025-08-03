@@ -1,10 +1,13 @@
 import Header from "@/components/Shared/header/Header";
+import {
+  HeaderLeftBack,
+  HeaderTitleApp,
+} from "@/components/Shared/header/HeaderTitle";
 import { router, Stack } from "expo-router";
-import { Pressable, Text } from "react-native";
 
 export default function Layout() {
   const onGoBack = () => router.back();
-  const onGoSignIn = () => router.push("/(auth)");
+
   return (
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen
@@ -13,18 +16,8 @@ export default function Layout() {
           headerShown: true,
           header: (props) => <Header {...props} />,
           animation: "fade",
-          headerLeft: () => (
-            <Pressable onPress={onGoBack}>
-              <Text style={{ fontSize: 18, fontFamily: "Amazon-Ember-Light" }}>
-                Back
-              </Text>
-            </Pressable>
-          ),
-          headerTitle: () => (
-            <Text style={{ fontSize: 18, fontFamily: "Amazon-Ember-Bold" }}>
-              Amazon.in
-            </Text>
-          ),
+          headerLeft: () => <HeaderLeftBack onPress={onGoBack} />,
+          headerTitle: () => <HeaderTitleApp />,
         }}
       />
       <Stack.Screen
@@ -33,18 +26,8 @@ export default function Layout() {
           headerShown: true,
           header: (props) => <Header {...props} />,
           animation: "fade",
-          headerLeft: () => (
-            <Pressable onPress={onGoSignIn}>
-              <Text style={{ fontSize: 18, fontFamily: "Amazon-Ember-Light" }}>
-                Back
-              </Text>
-            </Pressable>
-          ),
-          headerTitle: () => (
-            <Text style={{ fontSize: 18, fontFamily: "Amazon-Ember-Bold" }}>
-              Amazon.in
-            </Text>
-          ),
+          headerLeft: () => <HeaderLeftBack onPress={onGoBack} />,
+          headerTitle: () => <HeaderTitleApp />,
         }}
       />
     </Stack>
