@@ -9,8 +9,8 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import Checkbox from "expo-checkbox";
 import * as DocumentPicker from "expo-document-picker";
 import * as ImagePicker from "expo-image-picker";
-import { router, useNavigation } from "expo-router";
-import { useLayoutEffect, useState } from "react";
+import { router } from "expo-router";
+import { useState } from "react";
 import {
   Image,
   Pressable,
@@ -24,8 +24,7 @@ import { useSelector } from "react-redux";
 
 export default function CreateProduct() {
   const session = useSelector((state: RootState) => state.auth.session);
-  const navigation = useNavigation();
-  const onGoBack = () => router.back();
+
   const [name, setName] = useState<string>("");
   const [amountInStock, setAmountInStock] = useState<string>("");
   const [currentPrice, setCurrentPrice] = useState<string>("");
@@ -38,22 +37,7 @@ export default function CreateProduct() {
 
   const [fileUrlGLB, setFileUrlGLB] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerLeft: () => (
-        <Pressable onPress={onGoBack}>
-          <Text style={{ fontSize: 18, fontFamily: "Amazon-Ember-Light" }}>
-            Back
-          </Text>
-        </Pressable>
-      ),
-      headerTitle: () => (
-        <Text style={{ fontSize: 18, fontFamily: "Amazon-Ember-Bold" }}>
-          Amazon.in
-        </Text>
-      ),
-    });
-  }, [navigation]);
+
   const pickMedia = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (status !== "granted") {

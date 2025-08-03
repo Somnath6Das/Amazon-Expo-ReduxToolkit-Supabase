@@ -1,8 +1,8 @@
 import Header from "@/components/Shared/header/Header";
 import { RootState } from "@/store/store";
 import Entypo from "@expo/vector-icons/Entypo";
-import { Tabs } from "expo-router";
-import { Text, View } from "react-native";
+import { router, Tabs } from "expo-router";
+import { Pressable, Text, View } from "react-native";
 import { useSelector } from "react-redux";
 interface Tab {
   name: string;
@@ -10,22 +10,11 @@ interface Tab {
 }
 
 export default function TabLayout() {
-  // const session = useSelector((state: RootState) => state.auth.session);
+  const onGoBack = () => router.back();
   const undeliveredCount = useSelector(
     (state: RootState) => state.orderCount.undeliverdCount
   );
-  // const [undeliveredCount, setUndeliveredCount] = useState<number | null>(null);
-  // useEffect(() => {
-  //   const fetchCount = async () => {
-  //     if (session?.user?.id) {
-  //       const count = await getUndeliverdCount(session.user.id);
-  //       setUndeliveredCount(count);
-  //     }
-  //   };
 
-  //   fetchCount();
-  // }, [undeliveredCount]);
-  // const value: number = 8;
   const tabs: Tab[] = [
     {
       name: "seller_page",
@@ -49,6 +38,20 @@ export default function TabLayout() {
               borderTopColor: "lightgray",
             },
             header: (props) => <Header {...props} />,
+            headerLeft: () => (
+              <Pressable onPress={onGoBack}>
+                <Text
+                  style={{ fontSize: 18, fontFamily: "Amazon-Ember-Light" }}
+                >
+                  Back
+                </Text>
+              </Pressable>
+            ),
+            headerTitle: () => (
+              <Text style={{ fontSize: 18, fontFamily: "Amazon-Ember-Bold" }}>
+                Amazon.in
+              </Text>
+            ),
             tabBarLabel: () => null,
             tabBarIcon: ({ focused }) => (
               <View

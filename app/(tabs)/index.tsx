@@ -4,7 +4,6 @@ import { ProductDealCard } from "@/components/Screens/home/ProductDealCard";
 import { DefaultButton } from "@/components/Shared/DefaultButton";
 import { DeliveryLocation } from "@/components/Shared/DeliveryLocation";
 import { HeaderTabsProps } from "@/components/Shared/header/HeaderTabs";
-import { setSession } from "@/store/authSlice";
 import { RootState } from "@/store/store";
 import { supabase } from "@/supabase";
 import { Product } from "@/types/product";
@@ -18,11 +17,6 @@ export default function Home() {
   const navigation = useNavigation();
   const session = useSelector((state: RootState) => state.auth.session);
   const [deals, setDeals] = useState<Product[]>([]);
-
-  const hendleSignout = async () => {
-    dispatch(setSession(null));
-    await supabase.auth.signOut();
-  };
 
   const tabs: HeaderTabsProps["tabs"] = [
     {
