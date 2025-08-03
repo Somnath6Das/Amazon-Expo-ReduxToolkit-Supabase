@@ -1,3 +1,4 @@
+import { AmazonEmberBold } from "@/utils/Constant";
 import { Image, Text, View } from "react-native";
 type OrderRow = {
   id: number;
@@ -35,7 +36,7 @@ export default function OrdersCard({ order }: { order: OrderRow }) {
           }}
         />
         <View style={{ justifyContent: "center" }}>
-          <Text style={{ fontSize: 18, fontFamily: "Amazon-Ember-Bold" }}>
+          <Text style={{ fontSize: 18, fontFamily: AmazonEmberBold }}>
             {order.product_name.split(" ").length > 4
               ? order.product_name.split(" ").slice(0, 4).join(" ") + "..."
               : order.product_name}

@@ -1,3 +1,4 @@
+import { AmazonEmber } from "@/utils/Constant";
 import { Dimensions, Image, Text, View } from "react-native";
 
 const items = {
@@ -37,7 +38,7 @@ export function ProfileUnauthedBanner() {
             style={{
               maxWidth: Dimensions.get("window").width - 100,
               fontSize: 20,
-              fontFamily: "Amazon-Ember",
+              fontFamily: AmazonEmber,
             }}
           >
             {text}

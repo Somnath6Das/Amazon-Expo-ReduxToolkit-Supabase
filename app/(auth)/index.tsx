@@ -1,6 +1,11 @@
 import { DefaultButton } from "@/components/Shared/DefaultButton";
 import { setSession } from "@/store/authSlice";
 import { supabase } from "@/supabase";
+import {
+  AmazonEmber,
+  AmazonEmberBold,
+  AmazonEmberlight,
+} from "@/utils/Constant";
 import { Checkbox } from "expo-checkbox";
 import { router } from "expo-router";
 import { useState } from "react";
@@ -50,7 +55,7 @@ export default function Login() {
           alignSelf: "flex-start",
           fontSize: 20,
           fontWeight: "bold",
-          fontFamily: "Amazon-Ember-Bold",
+          fontFamily: AmazonEmberBold,
         }}
       >
         Sign in {step === Step.EMAIL && "or create an account"}
@@ -63,7 +68,7 @@ export default function Login() {
               alignSelf: "flex-start",
               fontSize: 16,
               fontWeight: "bold",
-              fontFamily: "Amazon-Ember",
+              fontFamily: AmazonEmber,
             }}
           >
             Enter Email
@@ -81,7 +86,7 @@ export default function Login() {
                 alignSelf: "flex-start",
                 fontSize: 16,
                 fontWeight: "bold",
-                fontFamily: "Amazon-Ember",
+                fontFamily: AmazonEmber,
               }}
             >
               {email}
@@ -108,7 +113,7 @@ export default function Login() {
               borderRadius: 4,
               borderColor: "#ccc",
               padding: 10,
-              fontFamily: "Amazon-Ember",
+              fontFamily: AmazonEmber,
             }}
             placeholder="Email"
             autoCapitalize="none"
@@ -167,7 +172,7 @@ export default function Login() {
           style={{
             fontSize: 18,
             fontWeight: "800",
-            fontFamily: "Amazon-Ember",
+            fontFamily: AmazonEmber,
           }}
         >
           Don&apos;t have an account?{" "}
@@ -181,7 +186,7 @@ export default function Login() {
           justifyContent: "center",
         }}
       >
-        <Text style={{ fontFamily: "Amazon-Ember-Light" }}>
+        <Text style={{ fontFamily: AmazonEmberlight }}>
           By continuing, you agree to Amazon&apos;s{" "}
         </Text>
 
@@ -189,7 +194,7 @@ export default function Login() {
           style={{
             textDecorationLine: "underline",
             color: "#146eb4",
-            fontFamily: "Amazon-Ember-Light",
+            fontFamily: AmazonEmberlight,
           }}
         >
           Conditions
@@ -214,7 +219,7 @@ export default function Login() {
                 fontSize: 16,
                 textDecorationLine: "underline",
                 color: "#146eb4",
-                fontFamily: "Amazon-Ember-Light",
+                fontFamily: AmazonEmberlight,
               }}
             >
               {link}
@@ -225,7 +230,7 @@ export default function Login() {
           style={{
             color: "gray",
             fontSize: 14,
-            fontFamily: "Amazon-Ember-Light",
+            fontFamily: AmazonEmberlight,
           }}
         >
           © 1996-2021, Amazon.com, Inc. or its affiliates.

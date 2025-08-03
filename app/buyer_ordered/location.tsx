@@ -1,5 +1,6 @@
 import { RootState } from "@/store/store";
 import { supabase } from "@/supabase";
+import { AmazonEmber } from "@/utils/Constant";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { useEffect, useState } from "react";
 import { Text, TextInput, View } from "react-native";
@@ -60,7 +61,7 @@ export default function OrderLocation() {
         paddingHorizontal: 20,
       }}
     >
-      <Text style={{ fontSize: 20, fontFamily: "Amazon-Ember" }}>Name</Text>
+      <Text style={{ fontSize: 20, fontFamily: AmazonEmber }}>Name</Text>
 
       <TextInput
         value={name}
@@ -68,7 +69,7 @@ export default function OrderLocation() {
         style={{
           borderColor: "black",
           padding: 8,
-          fontFamily: "Amazon-Ember",
+          fontFamily: AmazonEmber,
           borderWidth: 1,
           borderRadius: 8,
           minHeight: 50,
@@ -80,7 +81,7 @@ export default function OrderLocation() {
         autoCorrect={false}
       />
 
-      <Text style={{ fontSize: 20, fontFamily: "Amazon-Ember" }}>
+      <Text style={{ fontSize: 20, fontFamily: AmazonEmber }}>
         Give Delivery Address
       </Text>
 
@@ -91,7 +92,7 @@ export default function OrderLocation() {
         style={{
           borderColor: "black",
           padding: 10,
-          fontFamily: "Amazon-Ember",
+          fontFamily: AmazonEmber,
           borderWidth: 1,
           borderRadius: 8,
           minHeight: 100,

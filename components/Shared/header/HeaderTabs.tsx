@@ -1,3 +1,4 @@
+import { AmazonEmberBold } from "@/utils/Constant";
 import { Text, View } from "react-native";
 
 export interface HeaderTabsProps {
@@ -19,7 +20,7 @@ export function HeaderTabs({ tabs }: HeaderTabsProps) {
         <Text
           style={{
             fontSize: 16,
-            fontFamily: "Amazon-Ember-Bold",
+            fontFamily: AmazonEmberBold,
             borderBottomColor: tab.active ? "black" : "transparent",
             borderBottomWidth: tab.active ? 2.5 : 0,
             paddingBottom: 10,

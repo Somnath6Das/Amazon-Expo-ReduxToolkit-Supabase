@@ -1,5 +1,6 @@
 import { supabase } from "@/supabase";
 import { Product } from "@/types/product";
+import { AmazonEmber } from "@/utils/Constant";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 interface Props {
@@ -40,7 +41,7 @@ export default function MyProductCard({ product }: Props) {
           alignSelf: "flex-start",
           width: 110,
           flexWrap: "wrap",
-          fontFamily: "Amazon-Ember",
+          fontFamily: AmazonEmber,
         }}
       >
         {product.name.split(" ").length > 8
@@ -53,7 +54,7 @@ export default function MyProductCard({ product }: Props) {
           alignSelf: "flex-start",
           width: 80,
           flexWrap: "wrap",
-          fontFamily: "Amazon-Ember",
+          fontFamily: AmazonEmber,
         }}
       >{`C.P ₹${product.currentPrice}`}</Text>
       <Text
@@ -62,7 +63,7 @@ export default function MyProductCard({ product }: Props) {
           alignSelf: "flex-start",
           width: 80,
           flexWrap: "wrap",
-          fontFamily: "Amazon-Ember",
+          fontFamily: AmazonEmber,
         }}
       >{`D.P ₹${product.deliveryPrice}`}</Text>
       <TouchableOpacity onPress={productDelete}>

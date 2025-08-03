@@ -1,3 +1,4 @@
+import { AmazonEmberBold } from "@/utils/Constant";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { Text, View } from "react-native";
 
@@ -15,7 +16,7 @@ export default function ThanksBuying() {
       <Text
         style={{
           fontSize: 30,
-          fontFamily: "Amazon-Ember-Bold",
+          fontFamily: AmazonEmberBold,
           color: "white",
           backgroundColor: "#034e0bff",
           padding: 10,

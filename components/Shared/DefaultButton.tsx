@@ -1,3 +1,4 @@
+import { AmazonEmber } from "@/utils/Constant";
 import { ComponentProps } from "react";
 import { Text, TouchableOpacity } from "react-native";
 
@@ -38,7 +39,7 @@ export function DefaultButton({
       <Text
         style={{
           color: variant === "primary" ? "white" : "black",
-          fontFamily: "Amazon-Ember",
+          fontFamily: AmazonEmber,
           fontSize: 18,
         }}
       >

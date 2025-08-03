@@ -3,6 +3,7 @@ import { ProfileUnauthedBanner } from "@/components/Screens/profile/ProfileUnaut
 import { DefaultButton } from "@/components/Shared/DefaultButton";
 import { RootState } from "@/store/store";
 import { supabase } from "@/supabase";
+import { AmazonEmber } from "@/utils/Constant";
 import Icon from "@expo/vector-icons/Ionicons";
 import BottomSheet from "@gorhom/bottom-sheet";
 
@@ -97,7 +98,7 @@ export default function Profile() {
                     backgroundColor: "gray",
                   }}
                 />
-                <Text style={{ fontSize: 18, fontFamily: "Amazon-Ember" }}>
+                <Text style={{ fontSize: 18, fontFamily: AmazonEmber }}>
                   Hello, {session?.user.email}
                 </Text>
 
@@ -121,7 +122,7 @@ export default function Profile() {
                 style={{
                   textAlign: "center",
                   fontSize: 24,
-                  fontFamily: "Amazon-Ember",
+                  fontFamily: AmazonEmber,
                 }}
               >
                 Sign in for the optimal experience

@@ -1,6 +1,7 @@
 import OrdersCard from "@/components/Screens/buyer_order/OrdersCard";
 import { RootState } from "@/store/store";
 import { supabase } from "@/supabase";
+import { AmazonEmberBold } from "@/utils/Constant";
 import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import { useSelector } from "react-redux";
@@ -31,7 +32,7 @@ export default function MyOrder() {
     >
       <Text
         style={{
-          fontFamily: "Amazon-Ember-Bold",
+          fontFamily: AmazonEmberBold,
           fontSize: 25,
           marginBottom: 10,
         }}

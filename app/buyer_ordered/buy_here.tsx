@@ -1,6 +1,7 @@
 import { DefaultButton } from "@/components/Shared/DefaultButton";
 import { RootState } from "@/store/store";
 import { supabase } from "@/supabase";
+import { AmazonEmber } from "@/utils/Constant";
 import { deliveryDate } from "@/utils/deliveryDate";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
@@ -69,13 +70,11 @@ export default function BuyHere() {
       {address?.location ? (
         <>
           <Text
-            style={{ fontFamily: "Amazon-Ember", fontSize: 22, marginTop: 10 }}
+            style={{ fontFamily: AmazonEmber, fontSize: 22, marginTop: 10 }}
           >
             {`Delivering to ${address?.full_name}`}
           </Text>
-          <Text
-            style={{ fontFamily: "Amazon-Ember", fontSize: 18, marginTop: 6 }}
-          >
+          <Text style={{ fontFamily: AmazonEmber, fontSize: 18, marginTop: 6 }}>
             {address?.location}
           </Text>
           <TouchableOpacity
@@ -85,7 +84,7 @@ export default function BuyHere() {
               style={{
                 textDecorationLine: "underline",
                 color: "#3434bcff",
-                fontFamily: "Amazon-Ember",
+                fontFamily: AmazonEmber,
                 marginTop: 8,
               }}
             >
@@ -101,7 +100,7 @@ export default function BuyHere() {
             style={{
               textDecorationLine: "underline",
               color: "#3434bcff",
-              fontFamily: "Amazon-Ember",
+              fontFamily: AmazonEmber,
             }}
           >
             Add a address
@@ -118,7 +117,7 @@ export default function BuyHere() {
       />
 
       <Text
-        style={{ fontFamily: "Amazon-Ember", fontSize: 18, marginTop: 6 }}
+        style={{ fontFamily: AmazonEmber, fontSize: 18, marginTop: 6 }}
         // save to db
       >{`Arriving ${deliveryDate(Number(deliveryInDays))}`}</Text>
       <Text>if you order in the next 10 hours and 48 minutes</Text>

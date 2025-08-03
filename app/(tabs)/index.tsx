@@ -7,6 +7,7 @@ import { HeaderTabsProps } from "@/components/Shared/header/HeaderTabs";
 import { RootState } from "@/store/store";
 import { supabase } from "@/supabase";
 import { Product } from "@/types/product";
+import { AmazonEmberBold } from "@/utils/Constant";
 import { router, useNavigation } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
 import { Alert, ScrollView, Text, View } from "react-native";
@@ -78,7 +79,7 @@ export default function Home() {
         <Text
           style={{
             alignSelf: "flex-start",
-            fontFamily: "Amazon-Ember-Bold",
+            fontFamily: AmazonEmberBold,
             fontSize: 20,
           }}
         >

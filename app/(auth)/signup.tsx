@@ -1,6 +1,11 @@
 import { DefaultButton } from "@/components/Shared/DefaultButton";
 import OtpNumInput from "@/components/Shared/OtpNumInput";
 import { supabase } from "@/supabase";
+import {
+  AmazonEmber,
+  AmazonEmberBold,
+  AmazonEmberlight,
+} from "@/utils/Constant";
 import { Checkbox } from "expo-checkbox";
 import { router } from "expo-router";
 import { useState } from "react";
@@ -74,7 +79,7 @@ export default function Signup() {
           alignSelf: "flex-start",
           fontSize: 20,
           fontWeight: "bold",
-          fontFamily: "Amazon-Ember-Bold",
+          fontFamily: AmazonEmberBold,
         }}
       >
         {step === Step.EMAIL && "Create an account"}
@@ -87,7 +92,7 @@ export default function Signup() {
               alignSelf: "flex-start",
               fontSize: 16,
               fontWeight: "bold",
-              fontFamily: "Amazon-Ember",
+              fontFamily: AmazonEmber,
             }}
           >
             Enter Email
@@ -105,7 +110,7 @@ export default function Signup() {
                 alignSelf: "flex-start",
                 fontSize: 16,
                 fontWeight: "bold",
-                fontFamily: "Amazon-Ember",
+                fontFamily: AmazonEmber,
               }}
             >
               {email}
@@ -132,7 +137,7 @@ export default function Signup() {
               borderRadius: 4,
               borderColor: "#ccc",
               padding: 10,
-              fontFamily: "Amazon-Ember",
+              fontFamily: AmazonEmber,
             }}
             placeholder="Email"
             autoCapitalize="none"
@@ -146,7 +151,7 @@ export default function Signup() {
                 style={{
                   alignSelf: "center",
                   fontSize: 14,
-                  fontFamily: "Amazon-Ember-Light",
+                  fontFamily: AmazonEmberlight,
                 }}
               >
                 Please fill the OTP
@@ -184,7 +189,7 @@ export default function Signup() {
                 style={{
                   fontSize: 16,
                   fontWeight: "bold",
-                  fontFamily: "Amazon-Ember",
+                  fontFamily: AmazonEmber,
                 }}
               >
                 Show Password
@@ -220,7 +225,7 @@ export default function Signup() {
           style={{
             fontSize: 18,
             fontWeight: "800",
-            fontFamily: "Amazon-Ember",
+            fontFamily: AmazonEmber,
           }}
         >
           Already have an account?
@@ -234,14 +239,14 @@ export default function Signup() {
           justifyContent: "center",
         }}
       >
-        <Text style={{ fontFamily: "Amazon-Ember-Light" }}>
+        <Text style={{ fontFamily: AmazonEmberlight }}>
           By continuing, you agree to Amazon&apos;s{" "}
         </Text>
         <Text
           style={{
             textDecorationLine: "underline",
             color: "#146eb4",
-            fontFamily: "Amazon-Ember-Light",
+            fontFamily: AmazonEmberlight,
           }}
         >
           Conditions
@@ -266,7 +271,7 @@ export default function Signup() {
                 fontSize: 16,
                 textDecorationLine: "underline",
                 color: "#146eb4",
-                fontFamily: "Amazon-Ember-Light",
+                fontFamily: AmazonEmberlight,
               }}
             >
               {link}
@@ -277,7 +282,7 @@ export default function Signup() {
           style={{
             color: "gray",
             fontSize: 14,
-            fontFamily: "Amazon-Ember-Light",
+            fontFamily: AmazonEmberlight,
           }}
         >
           © 1996-2021, Amazon.com, Inc. or its affiliates.

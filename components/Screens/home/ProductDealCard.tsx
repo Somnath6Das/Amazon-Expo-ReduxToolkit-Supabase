@@ -1,4 +1,5 @@
 import { Product } from "@/types/product";
+import { AmazonEmber } from "@/utils/Constant";
 import { offPercentage } from "@/utils/number";
 import React from "react";
 import { Dimensions, Image, Pressable, Text, View } from "react-native";
@@ -61,7 +62,7 @@ export function ProductDealCard({ product, onPress }: Props) {
             style={{
               fontSize: 12,
               color: "red",
-              fontFamily: "Amazon-Ember",
+              fontFamily: AmazonEmber,
             }}
           >
             Limited deal

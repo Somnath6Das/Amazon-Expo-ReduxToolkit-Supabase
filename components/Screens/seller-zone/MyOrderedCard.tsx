@@ -1,6 +1,7 @@
 import { setUndeliverdCount } from "@/store/orderCountSlice";
 import { RootState } from "@/store/store";
 import { supabase } from "@/supabase";
+import { AmazonEmber } from "@/utils/Constant";
 import { getUndeliverdCount } from "@/utils/getUndeliverdCount";
 import Checkbox from "expo-checkbox";
 import { useState } from "react";
@@ -70,7 +71,7 @@ export default function MyOrderedCard({ order }: { order: OrderRow }) {
           alignSelf: "flex-start",
           width: 70,
           flexWrap: "wrap",
-          fontFamily: "Amazon-Ember",
+          fontFamily: AmazonEmber,
         }}
       >
         {order.product_name.split(" ").length > 3
@@ -83,7 +84,7 @@ export default function MyOrderedCard({ order }: { order: OrderRow }) {
           alignSelf: "flex-start",
           width: 100,
           flexWrap: "wrap",
-          fontFamily: "Amazon-Ember",
+          fontFamily: AmazonEmber,
         }}
       >
         {order.delivery_address}
@@ -94,7 +95,7 @@ export default function MyOrderedCard({ order }: { order: OrderRow }) {
           alignSelf: "flex-start",
           width: 70,
           flexWrap: "wrap",
-          fontFamily: "Amazon-Ember",
+          fontFamily: AmazonEmber,
         }}
       >{`C.P ₹${order.current_price}`}</Text>
 

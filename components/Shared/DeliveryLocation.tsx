@@ -1,3 +1,4 @@
+import { AmazonEmber } from "@/utils/Constant";
 import Icon from "@expo/vector-icons/Ionicons";
 import { router } from "expo-router";
 
@@ -25,7 +26,7 @@ export function DeliveryLocation() {
             textAlign: "center",
             color: "black",
             fontWeight: "normal",
-            fontFamily: "Amazon-Ember",
+            fontFamily: AmazonEmber,
           }}
         >
           Deliver to -
@@ -36,7 +37,7 @@ export function DeliveryLocation() {
             textAlign: "center",
             color: "black",
             fontWeight: "normal",
-            fontFamily: "Amazon-Ember",
+            fontFamily: AmazonEmber,
           }}
         >
           Select Location

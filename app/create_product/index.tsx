@@ -1,6 +1,7 @@
 import { DefaultButton } from "@/components/Shared/DefaultButton";
 import { RootState } from "@/store/store";
 import { supabase } from "@/supabase";
+import { AmazonEmber } from "@/utils/Constant";
 import { glbUpload } from "@/utils/glbUpload";
 import { imageUpload } from "@/utils/imageUpload";
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
@@ -110,7 +111,7 @@ export default function CreateProduct() {
             alignSelf: "flex-start",
             fontSize: 16,
             fontWeight: "bold",
-            fontFamily: "Amazon-Ember",
+            fontFamily: AmazonEmber,
           }}
         >
           Enter Product Name
@@ -123,7 +124,7 @@ export default function CreateProduct() {
             borderRadius: 4,
             borderColor: "black",
             padding: 10,
-            fontFamily: "Amazon-Ember",
+            fontFamily: AmazonEmber,
           }}
           placeholder="Product Name"
           autoCapitalize="none"
@@ -134,7 +135,7 @@ export default function CreateProduct() {
             alignSelf: "flex-start",
             fontSize: 16,
             fontWeight: "bold",
-            fontFamily: "Amazon-Ember",
+            fontFamily: AmazonEmber,
           }}
         >
           Amount in stock
@@ -148,7 +149,7 @@ export default function CreateProduct() {
             borderRadius: 4,
             borderColor: "black",
             padding: 10,
-            fontFamily: "Amazon-Ember",
+            fontFamily: AmazonEmber,
           }}
           placeholder="Amount in stock"
           autoCapitalize="none"
@@ -159,7 +160,7 @@ export default function CreateProduct() {
             alignSelf: "flex-start",
             fontSize: 16,
             fontWeight: "bold",
-            fontFamily: "Amazon-Ember",
+            fontFamily: AmazonEmber,
           }}
         >
           Current Price
@@ -173,7 +174,7 @@ export default function CreateProduct() {
             borderRadius: 4,
             borderColor: "black",
             padding: 10,
-            fontFamily: "Amazon-Ember",
+            fontFamily: AmazonEmber,
           }}
           placeholder="Current Price"
           autoCapitalize="none"
@@ -184,7 +185,7 @@ export default function CreateProduct() {
             alignSelf: "flex-start",
             fontSize: 16,
             fontWeight: "bold",
-            fontFamily: "Amazon-Ember",
+            fontFamily: AmazonEmber,
           }}
         >
           Previous Price
@@ -198,7 +199,7 @@ export default function CreateProduct() {
             borderRadius: 4,
             borderColor: "black",
             padding: 10,
-            fontFamily: "Amazon-Ember",
+            fontFamily: AmazonEmber,
           }}
           placeholder="Previous Price"
           autoCapitalize="none"
@@ -209,7 +210,7 @@ export default function CreateProduct() {
             alignSelf: "flex-start",
             fontSize: 16,
             fontWeight: "bold",
-            fontFamily: "Amazon-Ember",
+            fontFamily: AmazonEmber,
           }}
         >
           Delivery Price
@@ -223,7 +224,7 @@ export default function CreateProduct() {
             borderRadius: 4,
             borderColor: "black",
             padding: 10,
-            fontFamily: "Amazon-Ember",
+            fontFamily: AmazonEmber,
           }}
           placeholder="Delivery Price"
           autoCapitalize="none"
@@ -234,7 +235,7 @@ export default function CreateProduct() {
             alignSelf: "flex-start",
             fontSize: 16,
             fontWeight: "bold",
-            fontFamily: "Amazon-Ember",
+            fontFamily: AmazonEmber,
           }}
         >
           Delivery In Days
@@ -248,7 +249,7 @@ export default function CreateProduct() {
             borderRadius: 4,
             borderColor: "black",
             padding: 10,
-            fontFamily: "Amazon-Ember",
+            fontFamily: AmazonEmber,
           }}
           placeholder="Delivery In Days"
           autoCapitalize="none"
@@ -271,7 +272,7 @@ export default function CreateProduct() {
             style={{
               fontSize: 16,
               fontWeight: "bold",
-              fontFamily: "Amazon-Ember",
+              fontFamily: AmazonEmber,
             }}
           >
             Amazon Choice
@@ -307,7 +308,7 @@ export default function CreateProduct() {
               alignSelf: "flex-start",
               fontSize: 16,
               fontWeight: "bold",
-              fontFamily: "Amazon-Ember",
+              fontFamily: AmazonEmber,
               marginBottom: 12,
             }}
           >
@@ -328,7 +329,7 @@ export default function CreateProduct() {
                 style={{
                   fontSize: 16,
                   fontWeight: "bold",
-                  fontFamily: "Amazon-Ember",
+                  fontFamily: AmazonEmber,
                   color: "#b6b6b6ff",
                 }}
               >
@@ -343,7 +344,7 @@ export default function CreateProduct() {
             alignSelf: "flex-start",
             fontSize: 16,
             fontWeight: "bold",
-            fontFamily: "Amazon-Ember",
+            fontFamily: AmazonEmber,
           }}
         >
           Add Product 3D Model .glb file
@@ -376,7 +377,7 @@ export default function CreateProduct() {
                 style={{
                   fontSize: 16,
 
-                  fontFamily: "Amazon-Ember",
+                  fontFamily: AmazonEmber,
                   color: "#b6b6b6ff",
                 }}
               >
