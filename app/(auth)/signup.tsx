@@ -2,8 +2,8 @@ import { DefaultButton } from "@/components/Shared/DefaultButton";
 import OtpNumInput from "@/components/Shared/OtpNumInput";
 import { supabase } from "@/supabase";
 import { Checkbox } from "expo-checkbox";
-import { router, useNavigation } from "expo-router";
-import { useLayoutEffect, useState } from "react";
+import { router } from "expo-router";
+import { useState } from "react";
 import { Dimensions, Pressable, Text, TextInput, View } from "react-native";
 
 enum Step {
@@ -12,7 +12,6 @@ enum Step {
   "PASSWORD" = 3,
 }
 export default function Signup() {
-  const navigation = useNavigation();
   const [step, setStep] = useState(Step.EMAIL);
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
@@ -59,24 +58,6 @@ export default function Signup() {
       console.error("Registration failed:", e);
     }
   }
-
-  const onGoBack = () => router.replace("/(auth)");
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerLeft: () => (
-        <Pressable onPress={onGoBack}>
-          <Text style={{ fontSize: 18, fontFamily: "Amazon-Ember-Light" }}>
-            Back
-          </Text>
-        </Pressable>
-      ),
-      headerTitle: () => (
-        <Text style={{ fontSize: 18, fontFamily: "Amazon-Ember-Bold" }}>
-          Amazon.in
-        </Text>
-      ),
-    });
-  }, [navigation]);
 
   return (
     <View

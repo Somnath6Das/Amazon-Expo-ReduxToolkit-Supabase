@@ -2,8 +2,8 @@ import { DefaultButton } from "@/components/Shared/DefaultButton";
 import { setSession } from "@/store/authSlice";
 import { supabase } from "@/supabase";
 import { Checkbox } from "expo-checkbox";
-import { router, useNavigation } from "expo-router";
-import { useLayoutEffect, useState } from "react";
+import { router } from "expo-router";
+import { useState } from "react";
 import { Dimensions, Pressable, Text, TextInput, View } from "react-native";
 import { useDispatch } from "react-redux";
 
@@ -13,7 +13,7 @@ enum Step {
 }
 export default function Login() {
   const dispatch = useDispatch();
-  const navigation = useNavigation();
+
   const [step, setStep] = useState(Step.EMAIL);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -34,23 +34,6 @@ export default function Login() {
       console.log(error);
     }
   }
-  const onGoBack = () => router.back();
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerLeft: () => (
-        <Pressable onPress={onGoBack}>
-          <Text style={{ fontSize: 18, fontFamily: "Amazon-Ember-Light" }}>
-            Back
-          </Text>
-        </Pressable>
-      ),
-      headerTitle: () => (
-        <Text style={{ fontSize: 18, fontFamily: "Amazon-Ember-Bold" }}>
-          Amazon.in
-        </Text>
-      ),
-    });
-  }, [navigation]);
 
   return (
     <View
