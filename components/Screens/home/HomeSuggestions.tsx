@@ -6,10 +6,25 @@ import {
   Text,
   View,
 } from "react-native";
-const IMG_AD_1 = require("@/assets/images/amazon-images/home-sugg-1.png");
-const IMG_AD_2 = require("@/assets/images/amazon-images/home-sugg-2.png");
-const IMG_AD_3 = require("@/assets/images/amazon-images/home-sugg-1.png");
-const images = [IMG_AD_1, IMG_AD_2, IMG_AD_3];
+
+const IMG_AD_1 = require("@/assets/images/amazon-images/sug-1.png");
+const IMG_AD_2 = require("@/assets/images/amazon-images/sug-2.png");
+const IMG_AD_3 = require("@/assets/images/amazon-images/sug-3.png");
+const IMG_AD_4 = require("@/assets/images/amazon-images/sug-4.png");
+const IMG_AD_5 = require("@/assets/images/amazon-images/sug-5.png");
+const IMG_AD_6 = require("@/assets/images/amazon-images/sug-6.png");
+const IMG_AD_7 = require("@/assets/images/amazon-images/sug-7.png");
+const IMG_AD_8 = require("@/assets/images/amazon-images/sug-8.png");
+const images = [
+  IMG_AD_1,
+  IMG_AD_2,
+  IMG_AD_3,
+  IMG_AD_4,
+  IMG_AD_5,
+  IMG_AD_6,
+  IMG_AD_7,
+  IMG_AD_8,
+];
 
 export function HomeSuggestions() {
   return (

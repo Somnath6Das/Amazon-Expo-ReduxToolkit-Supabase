@@ -14,8 +14,18 @@ const IMG_AD_3 = require("@/assets/images/amazon-images/slide-2.webp");
 const IMG_AD_2 = require("@/assets/images/amazon-images/slide-4.png");
 const IMG_AD_5 = require("@/assets/images/amazon-images/slide-3.webp");
 const IMG_AD_4 = require("@/assets/images/amazon-images/slide-5.jpg");
+const IMG_AD_6 = require("@/assets/images/amazon-images/slide-6.png");
+const IMG_AD_7 = require("@/assets/images/amazon-images/slide-7.jpg");
 
-const images = [IMG_AD_1, IMG_AD_2, IMG_AD_3, IMG_AD_4, IMG_AD_5];
+const images = [
+  IMG_AD_1,
+  IMG_AD_2,
+  IMG_AD_3,
+  IMG_AD_4,
+  IMG_AD_5,
+  IMG_AD_6,
+  IMG_AD_7,
+];
 const { width } = Dimensions.get("window");
 
 export default function HomeCarousel() {
