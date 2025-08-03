@@ -2,9 +2,9 @@ import { DefaultButton } from "@/components/Shared/DefaultButton";
 import { RootState } from "@/store/store";
 import { supabase } from "@/supabase";
 import { deliveryDate } from "@/utils/deliveryDate";
-import { router, useLocalSearchParams, useNavigation } from "expo-router";
-import { useEffect, useLayoutEffect, useState } from "react";
-import { Image, Pressable, Text, TouchableOpacity, View } from "react-native";
+import { router, useLocalSearchParams } from "expo-router";
+import { useEffect, useState } from "react";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 
 import { useSelector } from "react-redux";
 
@@ -40,24 +40,6 @@ export default function BuyHere() {
     getUserProduct();
   }, [address]);
 
-  const navigation = useNavigation();
-  const onGoBack = () => router.back();
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerLeft: () => (
-        <Pressable onPress={onGoBack}>
-          <Text style={{ fontSize: 18, fontFamily: "Amazon-Ember-Light" }}>
-            Back
-          </Text>
-        </Pressable>
-      ),
-      headerTitle: () => (
-        <Text style={{ fontSize: 18, fontFamily: "Amazon-Ember-Bold" }}>
-          Amazon.in
-        </Text>
-      ),
-    });
-  }, [navigation]);
   const orderSaveDb = async () => {
     const { data, error } = await supabase
       .from("orders")

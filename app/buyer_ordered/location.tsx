@@ -1,9 +1,8 @@
 import { RootState } from "@/store/store";
 import { supabase } from "@/supabase";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import { router, useNavigation } from "expo-router";
-import { useEffect, useLayoutEffect, useState } from "react";
-import { Pressable, Text, TextInput, View } from "react-native";
+import { useEffect, useState } from "react";
+import { Text, TextInput, View } from "react-native";
 import { useSelector } from "react-redux";
 export default function OrderLocation() {
   const session = useSelector((state: RootState) => state.auth.session);
@@ -51,24 +50,6 @@ export default function OrderLocation() {
     if (error) console.error("Save error:", error);
   };
 
-  const navigation = useNavigation();
-  const onGoBack = () => router.back();
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerLeft: () => (
-        <Pressable onPress={onGoBack}>
-          <Text style={{ fontSize: 18, fontFamily: "Amazon-Ember-Light" }}>
-            Back
-          </Text>
-        </Pressable>
-      ),
-      headerTitle: () => (
-        <Text style={{ fontSize: 18, fontFamily: "Amazon-Ember-Bold" }}>
-          Amazon.in
-        </Text>
-      ),
-    });
-  }, [navigation]);
   return (
     <View
       style={{

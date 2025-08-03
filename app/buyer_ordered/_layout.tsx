@@ -11,6 +11,18 @@ export default function Layout() {
         options={{
           headerShown: true,
           header: (props) => <Header {...props} />,
+          headerLeft: () => (
+            <Pressable onPress={onGoBack}>
+              <Text style={{ fontSize: 18, fontFamily: "Amazon-Ember-Light" }}>
+                Back
+              </Text>
+            </Pressable>
+          ),
+          headerTitle: () => (
+            <Text style={{ fontSize: 18, fontFamily: "Amazon-Ember-Bold" }}>
+              Amazon.in
+            </Text>
+          ),
         }}
       />
       <Stack.Screen
@@ -18,6 +30,18 @@ export default function Layout() {
         options={{
           headerShown: true,
           header: (props) => <Header {...props} />,
+          headerLeft: () => (
+            <Pressable onPress={onGoBack}>
+              <Text style={{ fontSize: 18, fontFamily: "Amazon-Ember-Light" }}>
+                Back
+              </Text>
+            </Pressable>
+          ),
+          headerTitle: () => (
+            <Text style={{ fontSize: 18, fontFamily: "Amazon-Ember-Bold" }}>
+              Amazon.in
+            </Text>
+          ),
         }}
       />
       <Stack.Screen
@@ -37,6 +61,12 @@ export default function Layout() {
               Amazon.in
             </Text>
           ),
+        }}
+      />
+      <Stack.Screen
+        name="thanks_buying"
+        options={{
+          headerShown: false,
         }}
       />
     </Stack>
